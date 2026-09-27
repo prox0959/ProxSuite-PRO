@@ -549,16 +549,16 @@
     /* PRICING */
     .pricing-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
-      gap: 24px;
-      max-width: 1080px;
+      grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
+      gap: 20px;
+      max-width: 1280px;
       margin: 0 auto;
     }
     .p-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 34px 28px;
+      padding: 32px 24px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -570,17 +570,27 @@
       box-shadow: 0 20px 60px rgba(56, 189, 248, 0.16);
       position: relative;
     }
+    .p-card.source {
+      background: linear-gradient(180deg, rgba(45, 27, 10, 0.88) 0%, rgba(15, 17, 28, 0.96) 100%);
+      border: 2px solid var(--amber);
+      box-shadow: 0 20px 60px rgba(251, 191, 36, 0.15);
+      position: relative;
+    }
     .p-ribbon {
       position: absolute;
       top: -13px;
-      right: 24px;
+      right: 20px;
       background: linear-gradient(90deg, var(--cyan), var(--emerald));
       color: #04070d;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.73rem;
+      font-size: 0.72rem;
       font-weight: 800;
       padding: 4px 14px;
       border-radius: 99px;
+    }
+    .p-ribbon.gold {
+      background: linear-gradient(90deg, #f59e0b, #fde047);
+      color: #04070d;
     }
     .p-tier {
       font-family: 'JetBrains Mono', monospace;
@@ -590,18 +600,18 @@
       margin-bottom: 10px;
     }
     .p-price {
-      font-size: 2.8rem;
+      font-size: 2.65rem;
       font-weight: 900;
       letter-spacing: -1px;
       margin-bottom: 6px;
     }
-    .p-price span { font-size: 0.95rem; color: var(--text-sub); font-weight: 400; }
-    .p-sub { color: var(--text-sub); font-size: 0.9rem; margin-bottom: 24px; }
-    .p-features { list-style: none; margin-bottom: 30px; }
+    .p-price span { font-size: 0.92rem; color: var(--text-sub); font-weight: 400; }
+    .p-sub { color: var(--text-sub); font-size: 0.89rem; margin-bottom: 22px; }
+    .p-features { list-style: none; margin-bottom: 28px; }
     .p-features li {
       padding: 8px 0;
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      font-size: 0.91rem;
+      font-size: 0.89rem;
       color: #e2e8f0;
       display: flex;
       align-items: center;
@@ -624,6 +634,10 @@
     }
     .p-card.pro .p-btn {
       background: linear-gradient(135deg, var(--cyan-dark), var(--cyan));
+      color: #04070d;
+    }
+    .p-card.source .p-btn {
+      background: linear-gradient(135deg, #d97706, #fbbf24);
       color: #04070d;
     }
     .p-btn:hover { transform: translateY(-2px); filter: brightness(1.08); }
@@ -1210,6 +1224,22 @@
         </div>
         <a href="#instant-checkout" onclick="selectCheckoutPlan('Permanent v2.x One-Time License ($24.99)')" class="p-btn">⚡ Select One-Time License ($24.99)</a>
       </div>
+
+      <div class="p-card source">
+        <div class="p-ribbon gold">B2B / DEVELOPER</div>
+        <div>
+          <div class="p-tier" style="color:var(--amber)">💎 SOURCE CODE & WHITE-LABEL</div>
+          <div class="p-price" style="color:#fef08a">$499 <span>/ Full Source</span></div>
+          <div class="p-sub">Also selling the complete 3,100+ line C# / Win32 / NT Syscall source code with commercial rebrand rights.</div>
+          <ul class="p-features">
+            <li>Full Unobfuscated C# Source Code (All 25 Engines)</li>
+            <li>Defender-Clean Dynamic API & Anti-Crack Architecture</li>
+            <li>CGAuth AES-256 + HMAC Licensing & SIEM Modules</li>
+            <li>Full White-Label / Rebrand Rights & Build Script</li>
+          </ul>
+        </div>
+        <a href="#instant-checkout" onclick="selectCheckoutPlan('Full Commercial Source Code & White-Label ($499.00)')" class="p-btn">💎 Buy Full Source Code ($499)</a>
+      </div>
     </div>
 
     <!-- AUTOMATED HWID ORDER & CHECKOUT GENERATOR -->
@@ -1217,17 +1247,18 @@
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
         <div>
           <span style="font-family:'JetBrains Mono',monospace;font-size:0.76rem;color:var(--cyan);text-transform:uppercase;letter-spacing:1px;">⚡ AUTOMATED HWID LICENSING PORTAL</span>
-          <h3 style="font-size:1.45rem;font-weight:800;margin-top:4px;">Instant License & Free Trial Order Generator</h3>
+          <h3 style="font-size:1.45rem;font-weight:800;margin-top:4px;">Instant License, Source Code & Free Trial Order Generator</h3>
         </div>
         <span style="background:rgba(52,211,153,0.14);color:var(--emerald);padding:5px 12px;border-radius:99px;font-family:'JetBrains Mono',monospace;font-size:0.75rem;font-weight:700;">● CGAUTH READY</span>
       </div>
 
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:18px;">
         <div>
-          <label style="display:block;font-size:0.82rem;color:var(--text-sub);margin-bottom:6px;font-weight:600;">1. Select License Tier</label>
+          <label style="display:block;font-size:0.82rem;color:var(--text-sub);margin-bottom:6px;font-weight:600;">1. Select License / Source Tier</label>
           <select id="chkPlan" onchange="updateOrderPreview()" style="width:100%;padding:12px;border-radius:8px;background:#0f172a;border:1px solid var(--border);color:#fff;font-family:'Inter',sans-serif;font-size:0.9rem;">
             <option value="Permanent v2.x One-Time License ($24.99)">Permanent v2.x One-Time License ($24.99)</option>
             <option value="30-Day PRO License ($9.99)">30-Day PRO License ($9.99)</option>
+            <option value="Full Commercial Source Code & White-Label ($499.00)">💎 Full Commercial Source Code & White-Label ($499.00)</option>
             <option value="24-Hour Free Trial ($0)">24-Hour Free Trial ($0.00)</option>
           </select>
         </div>

@@ -5,7 +5,8 @@
 🌐 **Official Interactive Web Portal & Instant Checkout:** **[https://prox0959.github.io/ProxSuite-PRO/](https://prox0959.github.io/ProxSuite-PRO/)**  
 ⚡ **Direct Standalone `.EXE` Download (Defender Verified 0/0 Clean):** **[ProxSuitePRO.exe](https://prox0959.github.io/ProxSuite-PRO/ProxSuitePRO.exe)**  
 📦 **Full Release Package (`.ZIP`):** **[ProxSuitePRO_v2.0_Customer_Release.zip](https://prox0959.github.io/ProxSuite-PRO/ProxSuitePRO_v2.0_Customer_Release.zip)**  
-💬 **Automated HWID Checkout / 24h Free Trial:** **[Launch Instant Order Generator](https://prox0959.github.io/ProxSuite-PRO/#instant-checkout)**
+🔑 **Licenses:** **24h Free Trial ($0)** | **30-Day PRO ($9.99)** | **Permanent v2.x ($24.99)**  
+💎 **Also Selling Full Source Code & White-Label Rights:** **$499.00** (Complete 3,100+ line C# / Win32 / NT Syscall source code for all 25 engines + CGAuth licensing + rebrand rights — **[Order via Portal](https://prox0959.github.io/ProxSuite-PRO/#instant-checkout)** or **[DM @prox_0959 on X](https://x.com/prox_0959)**)
 
 ---
 
