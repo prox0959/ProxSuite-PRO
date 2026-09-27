@@ -674,8 +674,9 @@
         <a href="#pricing">Pricing & Trial</a>
         <a href="#faq">FAQ</a>
       </div>
-      <div class="nav-cta">
-        <a href="ProxSuitePRO_v2.0_Customer_Release.zip" class="btn-nav-dl">⬇️ Download v2.0</a>
+      <div class="nav-cta" style="display:flex;gap:10px;align-items:center;">
+        <a href="ProxSuitePRO.exe" download class="btn-nav-dl">⚡ Download .EXE (v2.0)</a>
+        <a href="ProxSuitePRO_v2.0_Customer_Release.zip" download class="btn-ghost" style="padding:9px 14px;font-size:0.82rem;border-radius:8px;">📦 .ZIP</a>
       </div>
     </div>
   </nav>
@@ -694,10 +695,13 @@
       <code>ntdll.dll</code> syscall prologues, kernel BYOVD drivers, WMI subscriptions, and named pipe C2 channels inside a single 90 KB zero-dependency executable.
     </p>
     <div class="hero-btns">
-      <a href="ProxSuitePRO_v2.0_Customer_Release.zip" class="btn-main">
-        <span>⬇️ Download Client v2.0 (ZIP)</span>
+      <a href="ProxSuitePRO.exe" download class="btn-main">
+        <span>⚡ Direct Download ProxSuitePRO.exe (v2.0 Clean Build)</span>
       </a>
-      <a href="https://x.com/prox_0959" target="_blank" class="btn-ghost">
+      <a href="ProxSuitePRO_v2.0_Customer_Release.zip" download class="btn-ghost">
+        <span>📦 Download Full Release Package (.ZIP)</span>
+      </a>
+      <a href="https://x.com/prox_0959" target="_blank" class="btn-ghost" style="border-color:rgba(56,189,248,0.45);">
         <span>💬 Request 24h Free Trial / Buy Key (X: @prox_0959)</span>
       </a>
     </div>
@@ -708,16 +712,16 @@
         <div class="stat-lbl">Proprietary Security Engines</div>
       </div>
       <div class="stat-box">
-        <div class="stat-num">~90 KB</div>
-        <div class="stat-lbl">Standalone Native x64 Binary</div>
+        <div class="stat-num">0 / 0</div>
+        <div class="stat-lbl">Defender Verified Clean Binary</div>
       </div>
       <div class="stat-box">
         <div class="stat-num">600ms</div>
         <div class="stat-lbl">Real-Time Clipboard & Honeypot Guard</div>
       </div>
       <div class="stat-box">
-        <div class="stat-num">0 DLLs</div>
-        <div class="stat-lbl">Zero External Dependencies</div>
+        <div class="stat-num">~90 KB</div>
+        <div class="stat-lbl">Zero-Bloat Native x64 .EXE</div>
       </div>
     </div>
 
@@ -945,44 +949,131 @@
   </section>
 
   <section id="comparison" class="container">
-    <span class="sec-tag">WHY SECOND-OPINION EDR MATTERS</span>
-    <h2 class="sec-title">Standard Antivirus vs. ProxSuite PRO</h2>
-    <p class="sec-sub">Designed to run alongside Windows Defender or your existing AV to expose threats that evade static file signatures.</p>
+    <span class="sec-tag">HEAD-TO-HEAD BENCHMARK</span>
+    <h2 class="sec-title">ProxSuite PRO vs. Industry Antivirus & EDR Suites</h2>
+    <p class="sec-sub">See how ProxSuite PRO (Apex v2.0.5) compares against Windows Defender, Malwarebytes, Bitdefender, Kaspersky, CrowdStrike Falcon, and Sysinternals across 12 critical threat-hunting vectors.</p>
 
     <div class="comp-wrap">
       <table class="comp-table">
         <thead>
           <tr>
-            <th>Attack Vector / Forensic Capability</th>
-            <th>Traditional Antivirus</th>
-            <th>⚡ ProxSuite PRO (Apex v2.0)</th>
+            <th>Forensic Capability / Attack Vector</th>
+            <th style="background:rgba(56,189,248,0.16);color:#fff;border-bottom:2px solid var(--cyan);">⚡ ProxSuite PRO v2.0</th>
+            <th>🛡️ Windows Defender</th>
+            <th>🦠 Malwarebytes Premium</th>
+            <th>🔒 Bitdefender / Kaspersky</th>
+            <th>🦅 CrowdStrike / SentinelOne</th>
+            <th>🧰 Sysinternals Suite</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong>FUD Crypted Stealers & Reflective Loaders</strong></td>
-            <td style="color:var(--text-sub)">Bypassed when file hash is unknown</td>
-            <td style="color:var(--emerald);font-weight:700">Caught in RAM via Private RWX & Memory Webhook/C2 IOC Scanner</td>
+            <td><strong>Unbacked Private RWX Memory & Process Hollowing</strong></td>
+            <td style="background:rgba(52,211,153,0.08);color:var(--emerald);font-weight:700">✓ Live MZ/PE & Shellcode RAM Scanner</td>
+            <td style="color:var(--rose)">✗ Bypassed via AMSI/ETW patch</td>
+            <td style="color:var(--amber)">⚠️ Signature / heuristic only</td>
+            <td style="color:var(--amber)">⚠️ Misses custom LOLBIN hollowing</td>
+            <td style="color:var(--emerald)">✓ Kernel sensor (Enterprise)</td>
+            <td style="color:var(--rose)">✗ Manual hex dump required</td>
           </tr>
           <tr>
-            <td><strong>Self-Deleting Droppers (Executed & Erased)</strong></td>
-            <td style="color:var(--text-sub)">Reports "0 Threats" once file is deleted</td>
-            <td style="color:var(--emerald);font-weight:700">Exposes exact deleted path via Kernel BAM & Prefetch forensics</td>
+            <td><strong>NTDLL Syscall Unhooking & SSN Prologue Audit</strong></td>
+            <td style="background:rgba(52,211,153,0.08);color:var(--emerald);font-weight:700">✓ Audits 4C 8B D1 B8 & SSNs live</td>
+            <td style="color:var(--rose)">✗ Blind to user-mode NTDLL hooks</td>
+            <td style="color:var(--rose)">✗ Not inspected</td>
+            <td style="color:var(--rose)">✗ No user-visible syscall audit</td>
+            <td style="color:var(--amber)">⚠️ Internal sensor only</td>
+            <td style="color:var(--rose)">✗ Requires WinDbg</td>
           </tr>
           <tr>
-            <td><strong>Cobalt Strike / Sliver Named Pipe C2</strong></td>
-            <td style="color:var(--text-sub)">Blind to local IPC named pipes</td>
-            <td style="color:var(--emerald);font-weight:700">Dedicated NamedPipe C2 signature scanner</td>
+            <td><strong>AMSI & ETW Single-Byte (0xC3 RET) Patch Detection</strong></td>
+            <td style="background:rgba(52,211,153,0.08);color:var(--emerald);font-weight:700">✓ Byte-level prologue integrity check</td>
+            <td style="color:var(--rose)">✗ Blinded once patched in RAM</td>
+            <td style="color:var(--rose)">✗ No prologue verification</td>
+            <td style="color:var(--rose)">✗ Not reported to user</td>
+            <td style="color:var(--amber)">⚠️ Partial TI-ETW</td>
+            <td style="color:var(--rose)">✗ None</td>
           </tr>
           <tr>
-            <td><strong>Fileless WMI Subscription Backdoors</strong></td>
-            <td style="color:var(--text-sub)">Only checks standard Run registry keys</td>
-            <td style="color:var(--emerald);font-weight:700">Audits WMI EventConsumers & EventFilters in root\subscription</td>
+            <td><strong>Self-Deleting Droppers (Kernel BAM & Prefetch)</strong></td>
+            <td style="background:rgba(52,211,153,0.08);color:var(--emerald);font-weight:700">✓ GhostTrace BAM + .PF Post-Mortem</td>
+            <td style="color:var(--rose)">✗ Reports "0 Threats" if file deleted</td>
+            <td style="color:var(--rose)">✗ Only scans existing files on disk</td>
+            <td style="color:var(--rose)">✗ Misses post-execution deleted files</td>
+            <td style="color:var(--emerald)">✓ Cloud EDR timeline</td>
+            <td style="color:var(--rose)">✗ No automated BAM correlation</td>
           </tr>
           <tr>
-            <td><strong>Crypto Clipboard Wallet Swappers</strong></td>
-            <td style="color:var(--text-sub)">No real-time clipboard lock</td>
-            <td style="color:var(--emerald);font-weight:700">600ms BTC / ETH / USDT clipboard hijack blocker & auto-restore</td>
+            <td><strong>Cobalt Strike / Sliver / Havoc Named Pipe C2</strong></td>
+            <td style="background:rgba(52,211,153,0.08);color:var(--emerald);font-weight:700">✓ Dedicated \\.\pipe\ C2 Scanner</td>
+            <td style="color:var(--amber)">⚠️ Basic static signatures</td>
+            <td style="color:var(--rose)">✗ Checks TCP/IP web domains only</td>
+            <td style="color:var(--rose)">✗ Network socket focus only</td>
+            <td style="color:var(--emerald)">✓ Enterprise IPC telemetry</td>
+            <td style="color:var(--amber)">⚠️ Lists raw pipes without C2 rules</td>
+          </tr>
+          <tr>
+            <td><strong>LOLBIN RAM Discord / Telegram Webhook C2 Scan</strong></td>
+            <td style="background:rgba(52,211,153,0.08);color:var(--emerald);font-weight:700">✓ Live RAM String IOC Hunter</td>
+            <td style="color:var(--rose)">✗ HTTPS traffic looks like normal chat</td>
+            <td style="color:var(--rose)">✗ Cannot block legitimate Discord API</td>
+            <td style="color:var(--rose)">✗ Allows outbound HTTPS to Discord</td>
+            <td style="color:var(--amber)">⚠️ Requires custom YARA rule</td>
+            <td style="color:var(--amber)">⚠️ Manual Strings search per PID</td>
+          </tr>
+          <tr>
+            <td><strong>Vulnerable Kernel Drivers (BYOVD / LOLDrivers)</strong></td>
+            <td style="background:rgba(52,211,153,0.08);color:var(--emerald);font-weight:700">✓ Built-in LOLDrivers CVE Radar</td>
+            <td style="color:var(--amber)">⚠️ Blocklist often disabled by admin</td>
+            <td style="color:var(--rose)">✗ Trusts signed WHQL drivers</td>
+            <td style="color:var(--rose)">✗ Trusts valid digital signatures</td>
+            <td style="color:var(--emerald)">✓ Kernel driver telemetry</td>
+            <td style="color:var(--amber)">⚠️ Shows drivers without CVE match</td>
+          </tr>
+          <tr>
+            <td><strong>Fileless WMI Subscriptions & HKCU COM Hijacks</strong></td>
+            <td style="background:rgba(52,211,153,0.08);color:var(--emerald);font-weight:700">✓ Authenticode-Filtered Zero-FP Audit</td>
+            <td style="color:var(--amber)">⚠️ Misses custom HKCU InprocServer32</td>
+            <td style="color:var(--amber)">⚠️ Scans standard Run keys only</td>
+            <td style="color:var(--amber)">⚠️ Partial startup inspection</td>
+            <td style="color:var(--emerald)">✓ Full persistence telemetry</td>
+            <td style="color:var(--amber)">⚠️ Dumps 4,000+ noisy legit rows</td>
+          </tr>
+          <tr>
+            <td><strong>Real-Time Crypto Clipboard Hijack Shield</strong></td>
+            <td style="background:rgba(52,211,153,0.08);color:var(--emerald);font-weight:700">✓ 600ms BTC/ETH/USDT Vault & Revert</td>
+            <td style="color:var(--rose)">✗ Zero clipboard protection</td>
+            <td style="color:var(--rose)">✗ Zero clipboard protection</td>
+            <td style="color:var(--rose)">✗ No wallet auto-restore</td>
+            <td style="color:var(--rose)">✗ Not built for crypto traders</td>
+            <td style="color:var(--rose)">✗ None</td>
+          </tr>
+          <tr>
+            <td><strong>Chromium Extension Manifest & Update URL Audit</strong></td>
+            <td style="background:rgba(52,211,153,0.08);color:var(--emerald);font-weight:700">✓ Full Manifest Risk & Off-Store Check</td>
+            <td style="color:var(--rose)">✗ Blind to browser extensions</td>
+            <td style="color:var(--amber)">⚠️ Known adware IDs only</td>
+            <td style="color:var(--rose)">✗ No manifest permission audit</td>
+            <td style="color:var(--amber)">⚠️ Paid add-on module</td>
+            <td style="color:var(--rose)">✗ None</td>
+          </tr>
+          <tr>
+            <td><strong>RAM Footprint & System Performance Impact</strong></td>
+            <td style="background:rgba(52,211,153,0.08);color:var(--emerald);font-weight:700">~90 KB EXE / ~25 MB On-Demand</td>
+            <td style="color:var(--amber)">~350 MB RAM (Constant CPU spikes)</td>
+            <td style="color:var(--amber)">~450 MB RAM + Background Service</td>
+            <td style="color:var(--rose)">~700 MB RAM + Heavy Filter Drivers</td>
+            <td style="color:var(--amber)">~300 MB RAM + 24/7 Cloud Upload</td>
+            <td style="color:var(--emerald)">~45 MB (20 separate binaries)</td>
+          </tr>
+          <tr>
+            <td><strong>Licensing Cost & Availability</strong></td>
+            <td style="background:rgba(52,211,153,0.08);color:var(--emerald);font-weight:700">$24.99 One-Time (or 24h Free Trial)</td>
+            <td style="color:var(--text-sub)">Included in OS (#1 Bypass Target)</td>
+            <td style="color:var(--rose)">$44.99 - $59.99 / Year Subscription</td>
+            <td style="color:var(--rose)">$59.99 - $89.99 / Year Subscription</td>
+            <td style="color:var(--rose)">$100+ / Endpoint / Year (Corp Only)</td>
+            <td style="color:var(--text-sub)">Free (Manual CLI/GUI tools)</td>
           </tr>
         </tbody>
       </table>
@@ -992,18 +1083,18 @@
   <section class="container">
     <span class="sec-tag">INSTANT ACTIVATION</span>
     <h2 class="sec-title">Up and Running in 60 Seconds</h2>
-    <p class="sec-sub">No bloated installers, no background bloatware, and no complex setup.</p>
+    <p class="sec-sub">No bloated installers, no background bloatware, and 100% verified clean by Windows Defender.</p>
 
     <div class="steps-grid">
       <div class="step-card">
         <div class="step-num">01</div>
-        <h3>Download the Standalone ZIP</h3>
-        <p>Download <code>ProxSuitePRO_v2.0_Customer_Release.zip</code> (52 KB) and extract <code>ProxSuitePRO.exe</code> to any folder.</p>
+        <h3>Download ProxSuitePRO.exe</h3>
+        <p>Download <code>ProxSuitePRO.exe</code> directly (or the release <code>.ZIP</code>) and run it as Administrator on Windows 10/11 x64.</p>
       </div>
       <div class="step-card">
         <div class="step-num">02</div>
         <h3>Copy Your Hardware ID</h3>
-        <p>Run <code>ProxSuitePRO.exe</code> as Administrator and click <strong>Copy HWID</strong> or click the built-in <strong>Buy / Free Trial</strong> button.</p>
+        <p>On the login screen, click <strong>Copy HWID</strong> and click the built-in <strong>Buy License / 24h Free Trial</strong> button.</p>
       </div>
       <div class="step-card">
         <div class="step-num">03</div>
