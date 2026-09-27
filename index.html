@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ProxSuite PRO (Apex Edition v2.0) | 21-in-1 Windows EDR, Memory Forensics & Anti-Stealer Suite</title>
+  <meta name="description" content="Standalone x64 Windows EDR, Live Memory Forensics, Anti-Stealer, Ransomware Honeypot, and C2 Radar Suite. 21 Proprietary Engines in a single 90KB native executable." />
+  <style>
+    :root {
+      --bg: #070a12;
+      --card: #0f1626;
+      --card-hover: #151f36;
+      --border: #1e293b;
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.22);
+      --green: #4ade80;
+      --red: #f87171;
+      --amber: #fb923c;
+      --purple: #a855f7;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      background-image: radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.10) 0%, transparent 55%);
+      color: var(--text);
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+      line-height: 1.6;
+    }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+    /* NAVBAR */
+    nav {
+      border-bottom: 1px solid var(--border);
+      background: rgba(7, 10, 18, 0.88);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 68px;
+    }
+    .brand {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .brand span { color: var(--text); }
+    .nav-links { display: flex; gap: 24px; align-items: center; font-size: 0.92rem; color: var(--muted); }
+    .nav-links a:hover { color: var(--accent); }
+    .btn-sm {
+      background: var(--accent);
+      color: #070a12;
+      font-weight: 700;
+      padding: 8px 16px;
+      border-radius: 6px;
+      transition: 0.2s;
+    }
+    .btn-sm:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    /* HERO */
+    .hero {
+      padding: 80px 0 56px;
+      text-align: center;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: var(--accent);
+      font-family: Consolas, monospace;
+      font-size: 0.82rem;
+      padding: 6px 14px;
+      border-radius: 99px;
+      margin-bottom: 22px;
+    }
+    .hero h1 {
+      font-size: 3.1rem;
+      font-weight: 800;
+      line-height: 1.18;
+      max-width: 920px;
+      margin: 0 auto 20px;
+    }
+    .hero h1 .grad {
+      background: linear-gradient(90deg, #38bdf8, #4ade80);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      color: var(--muted);
+      font-size: 1.15rem;
+      max-width: 760px;
+      margin: 0 auto 36px;
+    }
+    .cta-row {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.02rem;
+      padding: 15px 28px;
+      border-radius: 8px;
+      box-shadow: 0 8px 25px var(--accent-glow);
+      transition: 0.2s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); }
+    .btn-secondary {
+      background: var(--card);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 1.02rem;
+      padding: 15px 28px;
+      border-radius: 8px;
+      transition: 0.2s;
+    }
+    .btn-secondary:hover { background: rgba(56, 189, 248, 0.1); transform: translateY(-2px); }
+    .hero-meta {
+      font-family: Consolas, monospace;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    /* LIVE UI MOCKUP */
+    .mockup-wrap {
+      background: #0b0f19;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65);
+      margin-top: 42px;
+      text-align: left;
+    }
+    .mockup-bar {
+      background: #111827;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: Consolas, monospace;
+      font-size: 0.85rem;
+    }
+    .mockup-title { color: var(--accent); font-weight: 700; }
+    .mockup-status { color: var(--green); }
+    .mockup-body {
+      padding: 20px;
+      font-family: Consolas, monospace;
+      font-size: 0.83rem;
+      overflow-x: auto;
+    }
+    .mock-table { width: 100%; border-collapse: collapse; }
+    .mock-table th {
+      background: #1e293b;
+      color: #94a3b8;
+      padding: 9px 12px;
+      text-align: left;
+    }
+    .mock-table td {
+      padding: 9px 12px;
+      border-bottom: 1px solid #162032;
+    }
+    .sev-crit { color: var(--red); font-weight: 700; }
+    .sev-clean { color: var(--green); font-weight: 700; }
+    .sev-high { color: var(--amber); font-weight: 700; }
+
+    /* SECTION HEADERS */
+    section { padding: 72px 0; border-top: 1px solid rgba(30, 41, 59, 0.5); }
+    .sec-title {
+      text-align: center;
+      font-size: 2.1rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .sec-sub {
+      text-align: center;
+      color: var(--muted);
+      max-width: 680px;
+      margin: 0 auto 48px;
+    }
+
+    /* 21 ENGINES GRID */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+      gap: 18px;
+    }
+    .engine-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      transition: 0.2s;
+    }
+    .engine-card:hover {
+      background: var(--card-hover);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .engine-num {
+      font-family: Consolas, monospace;
+      font-size: 0.78rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .engine-card h3 { font-size: 1.08rem; margin-bottom: 8px; color: #fff; }
+    .engine-card p { font-size: 0.9rem; color: var(--muted); }
+
+    /* COMPARISON TABLE */
+    .comp-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .comp-table th, .comp-table td {
+      padding: 15px 18px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      font-size: 0.94rem;
+    }
+    .comp-table th { background: #162032; color: #fff; font-size: 1rem; }
+
+    /* PRICING */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+    .price-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .price-card.featured {
+      border: 2px solid var(--accent);
+      box-shadow: 0 0 35px rgba(56, 189, 248, 0.14);
+      position: relative;
+    }
+    .pop-tag {
+      position: absolute;
+      top: -12px;
+      right: 20px;
+      background: var(--accent);
+      color: #070a12;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 3px 12px;
+      border-radius: 99px;
+    }
+    .price-tier { font-size: 1.1rem; font-weight: 700; color: var(--accent); margin-bottom: 8px; }
+    .price-val { font-size: 2.5rem; font-weight: 800; margin-bottom: 6px; }
+    .price-val span { font-size: 0.95rem; color: var(--muted); font-weight: 400; }
+    .price-desc { color: var(--muted); font-size: 0.88rem; margin-bottom: 22px; }
+    .price-list { list-style: none; margin-bottom: 28px; }
+    .price-list li { margin-bottom: 10px; font-size: 0.92rem; color: #cbd5e1; }
+    .price-btn {
+      display: block;
+      text-align: center;
+      padding: 13px;
+      border-radius: 8px;
+      font-weight: 700;
+      background: #1e293b;
+      color: #fff;
+      transition: 0.2s;
+    }
+    .price-card.featured .price-btn {
+      background: var(--accent);
+      color: #070a12;
+    }
+    .price-btn:hover { opacity: 0.9; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="container nav-inner">
+      <div class="brand">⚡ PROXSUITE <span>PRO v2.0</span></div>
+      <div class="nav-links">
+        <a href="#engines">21 Engines</a>
+        <a href="#comparison">vs. Antivirus</a>
+        <a href="#pricing">Pricing & Trial</a>
+        <a href="ProxSuitePRO_v2.0_Customer_Release.zip" class="btn-sm">⬇️ Download Client</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero container">
+    <div class="badge">v2.0.0 APEX EDITION • 21-IN-1 NATIVE X64 WINDOWS EDR & DFIR SUITE</div>
+    <h1>Catch What Traditional Antivirus Misses.<br /><span class="grad">Direct in RAM & Kernel.</span></h1>
+    <p>
+      FUD infostealers, crypto clippers, reflective DLL loaders, and Cobalt Strike beacons bypass static file antivirus.
+      <strong>ProxSuite PRO</strong> packs 21 low-level memory, syscall, persistence, and OSINT engines into a single 90 KB native Windows executable.
+    </p>
+    <div class="cta-row">
+      <a href="ProxSuitePRO_v2.0_Customer_Release.zip" class="btn-primary">⬇️ Download ProxSuite PRO v2.0 (ZIP)</a>
+      <a href="https://x.com/prox_0959" target="_blank" class="btn-secondary">💬 Get License / 24h Free Trial (X: @prox_0959)</a>
+    </div>
+    <div class="hero-meta">
+      Standalone x64 Windows 10/11 Binary • Zero External Dependencies • CGAuth Hardware-ID Locked
+    </div>
+
+    <div class="mockup-wrap">
+      <div class="mockup-bar">
+        <span class="mockup-title">⚡ PROXSUITE PRO : APEX COMMAND CENTER (21-IN-1 TELEMETRY)</span>
+        <span class="mockup-status">🛡️ CryptoClipGuard: ACTIVE | 🍯 Ransomware Honeypot: ARMED</span>
+      </div>
+      <div class="mockup-body">
+        <table class="mock-table">
+          <thead>
+            <tr>
+              <th>Engine Module</th>
+              <th>Severity</th>
+              <th>Target Process / Artifact</th>
+              <th>Forensic Telemetry & Syscall / Memory Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Behavioral Correlation</td>
+              <td class="sev-crit">CRITICAL</td>
+              <td>ATTACK CHAIN: COBALT STRIKE</td>
+              <td>(3/3 threat signals matched) Named pipe MSSE-4812 + Unbacked MZ/PE in RAM + SeDebugPrivilege ENABLED</td>
+            </tr>
+            <tr>
+              <td>HollowHunter</td>
+              <td class="sev-crit">CRITICAL</td>
+              <td>rundll32.exe (PID: 8412)</td>
+              <td>UNBACKED MZ/PE EXECUTABLE IN RAM @ 0x1A4F0000 | RWX Pages: 4 (256 KB)</td>
+            </tr>
+            <tr>
+              <td>CryptoClipGuard PRO</td>
+              <td class="sev-crit">CRITICAL</td>
+              <td>BTC Clipboard Swap</td>
+              <td>BLOCKED HIJACK! Attacker wallet 'bc1qxy2kg...' replaced back with your safe wallet in 4ms</td>
+            </tr>
+            <tr>
+              <td>GhostTrace [BAM]</td>
+              <td class="sev-crit">CRITICAL</td>
+              <td>loader_crypt.exe</td>
+              <td>[DELETED AFTER EXECUTION!] Kernel BAM trace found at C:\Users\Admin\AppData\Local\Temp\loader_crypt.exe</td>
+            </tr>
+            <tr>
+              <td>DriverRadar [BYOVD]</td>
+              <td class="sev-high">HIGH</td>
+              <td>rtcore64.sys (RTCore64)</td>
+              <td>VULNERABLE KERNEL DRIVER (LOLDrivers BYOVD)! Arbitrary kernel R/W primitive active</td>
+            </tr>
+            <tr>
+              <td>MemGuard PRO</td>
+              <td class="sev-clean">CLEAN</td>
+              <td>ntdll!NtOpenProcess</td>
+              <td>UNHOOKED | Prologue: 4C 8B D1 B8 | SSN: 0x0026 (Verified against clean disk image)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </header>
+
+  <section id="engines" class="container">
+    <h2 class="sec-title">21 Proprietary Security & Forensics Engines</h2>
+    <p class="sec-sub">Built in pure C# with direct Win32 & NT Kernel P/Invoke. No bloated background services, no third-party DLL dependencies.</p>
+
+    <div class="grid-3">
+      <div class="engine-card">
+        <div class="engine-num">Engine 01</div>
+        <h3>🛡️ MemGuard PRO v2.0</h3>
+        <p>Inspects live <code>ntdll.dll</code> syscall prologues (<code>4C 8B D1 B8</code>) for user-mode inline hooks and detects <code>comsvcs.dll</code> LSASS MiniDump attacks.</p>
+      </div>
+      <div class="engine-card">
+        <div class="engine-num">Engine 02</div>
+        <h3>🧬 HollowHunter</h3>
+        <p>Scans <code>MEM_PRIVATE</code> RWX/WC pages across all processes for unbacked <code>MZ/PE</code> headers and Cobalt Strike / Metasploit shellcode stubs with Authenticode filtering.</p>
+      </div>
+      <div class="engine-card">
+        <div class="engine-num">Engine 03</div>
+        <h3>👻 GhostTrace (BAM & Prefetch)</h3>
+        <p>Exposes stealth droppers that execute and immediately delete themselves by parsing Kernel BAM registry keys, Windows Prefetch (<code>.pf</code>), and USB history.</p>
+      </div>
+      <div class="engine-card">
+        <div class="engine-num">Engine 04</div>
+        <h3>🔐 VaultShield Anti-Stealer</h3>
+        <p>Monitors Chrome, Brave, Edge, Discord, Telegram, Exodus, and Electrum credential vaults while hunting unsigned Temp-staged infostealer processes.</p>
+      </div>
+      <div class="engine-card">
+        <div class="engine-num">Engine 05</div>
+        <h3>🌐 NetSentinel C2 Radar</h3>
+        <p>Maps live TCP sockets via native <code>GetExtendedTcpTable</code> to process PIDs, flagging known C2 ports and suspicious LOLBIN network connections.</p>
+      </div>
+      <div class="engine-card">
+        <div class="engine-num">Engine 06</div>
+        <h3>📦 OmniTriage PRO</h3>
+        <p>Audits HKCU and HKLM startup autoruns for obfuscated PowerShell, CMD, MSHTA, and AppData staging persistence.</p>
+      </div>
+      <div class="engine-card">
+        <div class="engine-num">Engine 07</div>
+        <h3>🚗 DriverRadar (BYOVD)</h3>
+        <p>Audits all loaded kernel drivers against the LOLDrivers vulnerable driver database (<code>rtcore64.sys</code>, <code>gdrv.sys</code>, <code>dbutil_2_3.sys</code>) and non-System32 paths.</p>
+      </div>
+      <div class="engine-card">
+        <div class="engine-num">Engine 08</div>
+        <h3>💉 AMSIShield & ETW Audit</h3>
+        <p>Verifies <code>ntdll!EtwEventWrite</code> and <code>amsi!AmsiScanBuffer</code> in memory to detect single-byte <code>0xC3 RET</code> telemetry blinding patches.</p>
+      </div>
+      <div class="engine-card">
+        <div class="engine-num">Engine 09</div>
+        <h3>🦠 DefenderTamper & Hosts Guard</h3>
+        <p>Detects unauthorized Windows Defender exclusion folders added by RATs and inspects <code>System32\drivers\etc\hosts</code> for security sinkholes.</p>
+      </div>
+      <div class="engine-card">
+        <div class="engine-num">Engine 10</div>
+        <h3>🕸️ GhostPersist (IFEO & Winlogon)</h3>
+        <p>Hunts silent <code>Image File Execution Options</code> debugger hijacks and <code>Winlogon\Shell</code> replacements.</p>
+      </div>
+      <div class="engine-card">
+        <div class="engine-num">Engine 11</div>
+        <h3>⚙️ 10-Point OS Hardener</h3>
+        <p>Audits & applies LSASS <code>RunAsPPL</code>, WDigest disabling, Event 4104 logging, Credential Guard (VBS), HVCI, UEFI Secure Boot, ASR, UAC, and PowerShell CLM.</p>
+      </div>
+      <div class="engine-card">
+        <div class="engine-num">Engine 12</div>
+        <h3>🔬 TrueVerdict Entropy Analyzer</h3>
+        <p>Computes file Shannon Entropy (<code>0.00 - 8.00</code>) and SHA-256 to immediately identify packed, crypted, or VMProtected binaries.</p>
+      </div>
+      <div class="engine-card">
+        <div class="engine-num">Engine 13</div>
+        <h3>🖼️ PixelTrace Image OSINT</h3>
+        <p>Extracts binary EXIF tags, decodes GPS coordinates with live street reverse-geocoding, detects AI provenance (C2PA/SD/Midjourney), and carves post-EOF steganography.</p>
+      </div>
+      <div class="engine-card">
+        <div class="engine-num">Engine 14</div>
+        <h3>🕷️ WMI Persistence Hunter</h3>
+        <p>Inspects <code>root\subscription</code> & <code>root\default</code> for fileless <code>CommandLineEventConsumer</code> and <code>ActiveScriptEventConsumer</code> backdoors.</p>
+      </div>
+      <div class="engine-card">
+        <div class="engine-num">Engine 15</div>
+        <h3>🔩 Named Pipe C2 Scanner</h3>
+        <p>Enumerates <code>\\.\pipe\</code> to catch Cobalt Strike (<code>MSSE-*</code>, <code>postex_*</code>), Sliver (<code>status_*</code>), Havoc, and Covenant IPC channels.</p>
+      </div>
+      <div class="engine-card">
+        <div class="engine-num">Engine 16</div>
+        <h3>🔑 Token Privilege Auditor</h3>
+        <p>Inspects process access tokens via <code>GetTokenInformation</code> to expose unexpected processes holding <code>SeDebugPrivilege</code> or <code>SeLoadDriverPrivilege</code>.</p>
+      </div>
+      <div class="engine-card">
+        <div class="engine-num">Engine 17</div>
+        <h3>🧩 COM Hijack Detector</h3>
+        <p>Scans <code>HKCU\Software\Classes\CLSID</code> <code>InprocServer32</code> overrides for unsigned or Temp-staged DLL hijacks.</p>
+      </div>
+      <div class="engine-card">
+        <div class="engine-num">Engine 18</div>
+        <h3>🌍 Browser Extension Scanner</h3>
+        <p>Analyzes Chrome, Edge, and Brave extension manifests for stealer permission combinations and rogue off-store <code>update_url</code> servers.</p>
+      </div>
+      <div class="engine-card">
+        <div class="engine-num">Engine 19</div>
+        <h3>🧠 Memory IOC Scanner</h3>
+        <p>Scans live LOLBIN process memory for hardcoded Discord webhooks, Telegram bot C2 endpoints, Ngrok tunnels, and reflective PowerShell stagers.</p>
+      </div>
+      <div class="engine-card">
+        <div class="engine-num">Engine 20</div>
+        <h3>⛓️ Behavioral Correlation Engine</h3>
+        <p>Cross-correlates findings across all active engines to automatically surface multi-stage APT, stealer, and rootkit attack chains.</p>
+      </div>
+      <div class="engine-card">
+        <div class="engine-num">Engine 21 + Real-Time Shield</div>
+        <h3>🍯 Ransomware Honeypot & ClipGuard</h3>
+        <p>Deploys monitored decoy files to catch ransomware encryption instantly, while guarding your clipboard against BTC/ETH/USDT wallet swaps.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="comparison" class="container">
+    <h2 class="sec-title">Why Antivirus Alone Is Not Enough</h2>
+    <p class="sec-sub">ProxSuite PRO works alongside Windows Defender or your existing AV as a deep second-opinion EDR & forensic triage layer.</p>
+
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Threat / Capability</th>
+          <th>Standard Antivirus</th>
+          <th>⚡ ProxSuite PRO (v2.0)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>FUD Crypted Infostealers & RATs</strong></td>
+          <td>Often bypassed if file signature is unknown</td>
+          <td class="sev-clean">Caught in RAM via Private RWX & Memory Webhook/C2 IOC scan</td>
+        </tr>
+        <tr>
+          <td><strong>Executed & Self-Deleted Malware</strong></td>
+          <td>Shows "0 Threats" after file deletes itself</td>
+          <td class="sev-clean">Exposes exact path & timestamp via Kernel BAM & Prefetch forensics</td>
+        </tr>
+        <tr>
+          <td><strong>AMSI / ETW Telemetry Blinding</strong></td>
+          <td>Silently blinded by 1-byte memory patches</td>
+          <td class="sev-clean">Audits live prologue bytes of EtwEventWrite & AmsiScanBuffer</td>
+        </tr>
+        <tr>
+          <td><strong>Cobalt Strike / Sliver Named Pipes</strong></td>
+          <td>Rarely inspects local IPC named pipes</td>
+          <td class="sev-clean">Dedicated NamedPipe C2 pattern scanner</td>
+        </tr>
+        <tr>
+          <td><strong>Crypto Clipboard Hijackers</strong></td>
+          <td>No clipboard wallet address lock</td>
+          <td class="sev-clean">600ms real-time BTC/ETH/TRC20 vault lock & auto-restore</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="pricing" class="container">
+    <h2 class="sec-title">Simple, Direct Licensing</h2>
+    <p class="sec-sub">Download the client below, copy your Hardware ID, and message <strong>@prox_0959</strong> on X for instant license key activation or a 24-hour free trial.</p>
+
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div>
+          <div class="price-tier">24-HOUR EVALUATION</div>
+          <div class="price-val">$0 <span>/ 24 Hours</span></div>
+          <div class="price-desc">Test all 21 engines on your own machine before buying.</div>
+          <ul class="price-list">
+            <li>✓ Full access to all 21 PRO engines</li>
+            <li>✓ Executive HTML Audit Report export</li>
+            <li>✓ Live CGAuth HWID activation</li>
+            <li>✓ Instant key delivery via X DM</li>
+          </ul>
+        </div>
+        <a href="https://x.com/prox_0959" target="_blank" class="price-btn">💬 Request Free Trial on X</a>
+      </div>
+
+      <div class="price-card">
+        <div>
+          <div class="price-tier">30-DAY PRO ACCESS</div>
+          <div class="price-val">$9.99 <span>/ 30 Days</span></div>
+          <div class="price-desc">Ideal for monthly incident response, triage & deep system audits.</div>
+          <ul class="price-list">
+            <li>✓ All 21 Proprietary Forensic Engines</li>
+            <li>✓ Real-Time CryptoClipGuard & Honeypot</li>
+            <li>✓ 1-Click OS Hardening (RunAsPPL / WDigest)</li>
+            <li>✓ 1 PC Hardware-ID Locked License</li>
+          </ul>
+        </div>
+        <a href="https://x.com/prox_0959" target="_blank" class="price-btn">🔑 Buy 30-Day Key via X DM</a>
+      </div>
+
+      <div class="price-card featured">
+        <div class="pop-tag">BEST VALUE</div>
+        <div>
+          <div class="price-tier">ONE-TIME PURCHASE (v2.x)</div>
+          <div class="price-val">$24.99 <span>/ One-Time</span></div>
+          <div class="price-desc">Permanent access to ProxSuite PRO v2.x with zero monthly fees.</div>
+          <ul class="price-list">
+            <li>✓ Permanent v2.x Edition License (No subscription)</li>
+            <li>✓ All 21 EDR, Memory & OSINT Engines</li>
+            <li>✓ Behavioral Correlation & Ransomware Honeypot</li>
+            <li>✓ Priority X DM Support & HWID Reset Support</li>
+          </ul>
+        </div>
+        <a href="https://x.com/prox_0959" target="_blank" class="price-btn">⚡ Buy One-Time License on X</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p><strong>ProxSuite PRO (Apex Edition v2.0)</strong> • Engineered by Çınar (<a href="https://x.com/prox_0959" target="_blank" style="color:var(--accent)">@prox_0959</a>)</p>
+      <p style="margin-top:6px;">Protected by Server-Enforced CGAuth AES-256-CBC + HMAC-SHA256 + 3-Layer Hardware ID Locking.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
