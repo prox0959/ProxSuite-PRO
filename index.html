@@ -1290,14 +1290,17 @@
       </div>
 
       <div style="display:flex;gap:12px;flex-wrap:wrap;">
-        <button onclick="submitOrderViaX()" style="flex:1;min-width:220px;padding:14px 18px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--cyan-dark),var(--cyan));color:#04070d;font-weight:800;font-size:0.92rem;cursor:pointer;">
-          🚀 1. Copy Ticket & Open X DM (@prox_0959)
+        <button onclick="submitOrderViaX()" style="flex:1;min-width:200px;padding:14px 16px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--cyan-dark),var(--cyan));color:#04070d;font-weight:800;font-size:0.9rem;cursor:pointer;">
+          🚀 1. Copy Ticket & Open X (@prox_0959)
         </button>
-        <button onclick="submitOrderViaGitHub()" style="flex:1;min-width:220px;padding:14px 18px;border-radius:10px;border:1px solid var(--emerald);background:rgba(52,211,153,0.14);color:var(--emerald);font-weight:800;font-size:0.92rem;cursor:pointer;">
-          ⚡ 2. 1-Click Submit Order via GitHub Ticket
+        <button onclick="submitOrderViaDiscord()" style="flex:1;min-width:200px;padding:14px 16px;border-radius:10px;border:1px solid #818cf8;background:rgba(99,102,241,0.18);color:#c7d2fe;font-weight:800;font-size:0.9rem;cursor:pointer;">
+          💬 2. Copy Ticket & DM Discord (prox0959)
         </button>
-        <button onclick="submitOrderViaEmail()" style="padding:14px 18px;border-radius:10px;border:1px solid var(--border);background:#1e293b;color:#fff;font-weight:700;font-size:0.9rem;cursor:pointer;">
-          📧 3. Dispatch via Email (prox0959@gmail.com)
+        <button onclick="submitOrderViaGitHub()" style="flex:1;min-width:200px;padding:14px 16px;border-radius:10px;border:1px solid var(--emerald);background:rgba(52,211,153,0.14);color:var(--emerald);font-weight:800;font-size:0.9rem;cursor:pointer;">
+          ⚡ 3. 1-Click GitHub Order Ticket
+        </button>
+        <button onclick="submitOrderViaEmail()" style="padding:14px 16px;border-radius:10px;border:1px solid var(--border);background:#1e293b;color:#fff;font-weight:700;font-size:0.88rem;cursor:pointer;">
+          📧 4. Email (prox0959@gmail.com)
         </button>
       </div>
     </div>
@@ -1316,15 +1319,15 @@
         <div class="faq-a">ProxSuite PRO includes a built-in JSON/YARA-Lite Dynamic Rule Engine that hot-reloads custom C2 named pipes, memory IOCs, and BYOVD driver signatures from <code>prox_rules.json</code> without recompiling the executable. SOC analysts can also stream alerts in real time to Windows EventLog (Event ID 2050) and any HTTP/HTTPS Webhook (Splunk, Elastic, Discord, or Slack).</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">What payment methods are accepted & what is included in the $499 Source Code?</div>
-        <div class="faq-a">All paid tiers ($9.99, $24.99, and $499 Source Code) are accepted <strong>exclusively via Cryptocurrency (USDT, BTC, ETH, SOL, LTC, XMR)</strong> — credit cards are not accepted. The $499 Source Code package includes the complete 3,100+ line C# source code for all 25 engines, Defender-clean API resolution, SIEM/JSON Rule engines, and our standalone Offline HWID Keygen (third-party CGAuth is not part of the source package).</div>
+        <div class="faq-q">What payment methods are accepted & how do I contact you?</div>
+        <div class="faq-a">All paid tiers ($9.99, $24.99, and $499 Source Code) are accepted <strong>exclusively via Cryptocurrency (USDT, BTC, ETH, SOL, LTC, XMR)</strong>. For instant activation or Source Code inquiries, reach out via <strong>Discord: <code>prox0959</code></strong>, <strong>X: <a href="https://x.com/prox_0959" target="_blank" style="color:var(--cyan)">@prox_0959</a></strong>, or <strong>GitHub Order Ticket</strong>.</div>
       </div>
     </div>
   </section>
 
   <footer>
     <div class="container">
-      <p><strong>⚡ ProxSuite PRO (Apex Edition v2.5 - 25-in-1 Enterprise)</strong> • Engineered by Çınar (<a href="https://x.com/prox_0959" target="_blank" style="color:var(--cyan)">@prox_0959</a>)</p>
+      <p><strong>⚡ ProxSuite PRO (Apex Edition v2.5 - 25-in-1 Enterprise)</strong> • Engineered by Çınar • <strong>Discord: <code>prox0959</code></strong> • <strong>X: <a href="https://x.com/prox_0959" target="_blank" style="color:var(--cyan)">@prox_0959</a></strong></p>
       <p style="margin-top:8px;color:var(--text-dim);">Protected by AES-256-CBC + HMAC-SHA256 Cryptographic Licensing + 3-Layer Hardware ID Locking + Kernel DACL Self-Defense.</p>
     </div>
   </footer>
@@ -1449,6 +1452,13 @@
       if (navigator.clipboard) navigator.clipboard.writeText(txt);
       window.open('https://x.com/prox_0959', '_blank');
       alert('Order Ticket copied to clipboard! Paste (Ctrl+V) it in a DM to @prox_0959 on X for instant activation.');
+    }
+
+    function submitOrderViaDiscord() {
+      const txt = buildOrderPayload();
+      if (navigator.clipboard) navigator.clipboard.writeText(txt);
+      window.open('https://discord.com/app', '_blank');
+      alert('Order Ticket copied to clipboard! Add/DM "prox0959" on Discord and paste (Ctrl+V) your ticket for instant activation.');
     }
 
     function submitOrderViaGitHub() {

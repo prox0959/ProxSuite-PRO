@@ -6,7 +6,8 @@
 ⚡ **Direct Standalone `.EXE` Download (Defender Verified 0/0 Clean):** **[ProxSuitePRO.exe](https://prox0959.github.io/ProxSuite-PRO/ProxSuitePRO.exe)**  
 📦 **Full Release Package (`.ZIP`):** **[ProxSuitePRO_v2.0_Customer_Release.zip](https://prox0959.github.io/ProxSuite-PRO/ProxSuitePRO_v2.0_Customer_Release.zip)**  
 🔑 **Licenses (Crypto Only — USDT / BTC / ETH / SOL / LTC / XMR):** **24h Free Trial ($0)** | **30-Day PRO ($9.99)** | **Permanent v2.x ($24.99)**  
-💎 **Also Selling Full Source Code & White-Label Rights:** **$499.00 (Crypto Only)** — Complete 3,100+ line C# / Win32 / NT Syscall source code for all 25 engines + Standalone Offline AES-256 HWID Keygen + SIEM/Rule modules + full rebrand rights *(Note: 3rd-party CGAuth module is excluded)* — **[Order via Portal](https://prox0959.github.io/ProxSuite-PRO/#instant-checkout)** or **[DM @prox_0959 on X](https://x.com/prox_0959)**
+💎 **Also Selling Full Source Code & White-Label Rights:** **$499.00 (Crypto Only)** — Complete 3,100+ line C# / Win32 / NT Syscall source code for all 25 engines + Standalone Offline AES-256 HWID Keygen + SIEM/Rule modules + full rebrand rights *(Note: 3rd-party CGAuth module is excluded)*  
+💬 **Instant Order & Contact:** **[Order Portal](https://prox0959.github.io/ProxSuite-PRO/#instant-checkout)** | **Discord: `prox0959`** | **X: [@prox_0959](https://x.com/prox_0959)**
 
 ---
 
