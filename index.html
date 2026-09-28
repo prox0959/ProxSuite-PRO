@@ -1275,6 +1275,10 @@
           <label style="display:block;font-size:0.82rem;color:var(--text-sub);margin-bottom:6px;font-weight:600;">3. Paste Your Hardware ID (from ProxSuitePRO.exe)</label>
           <input id="chkHwid" type="text" oninput="updateOrderPreview()" placeholder="e.g. A8F9C20144B89E12..." style="width:100%;padding:11px 12px;border-radius:8px;background:#0f172a;border:1px solid var(--border);color:var(--cyan);font-family:'JetBrains Mono',monospace;font-size:0.86rem;" />
         </div>
+        <div>
+          <label style="display:block;font-size:0.82rem;color:var(--text-sub);margin-bottom:6px;font-weight:600;">4. Your Contact (X / Telegram / Discord / Email)</label>
+          <input id="chkContact" type="text" oninput="updateOrderPreview()" placeholder="e.g. @username or email@domain.com" style="width:100%;padding:11px 12px;border-radius:8px;background:#0f172a;border:1px solid var(--border);color:#fff;font-family:'Inter',sans-serif;font-size:0.86rem;" />
+        </div>
       </div>
 
       <p style="font-size:0.8rem;color:var(--amber);margin-bottom:14px;font-family:'JetBrains Mono',monospace;">
@@ -1286,11 +1290,14 @@
       </div>
 
       <div style="display:flex;gap:12px;flex-wrap:wrap;">
-        <button onclick="submitOrderViaX()" style="flex:1;min-width:230px;padding:14px 20px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--cyan-dark),var(--cyan));color:#04070d;font-weight:800;font-size:0.95rem;cursor:pointer;">
-          🚀 Copy Order Ticket & Open Instant X Dispatch (@prox_0959)
+        <button onclick="submitOrderViaX()" style="flex:1;min-width:220px;padding:14px 18px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--cyan-dark),var(--cyan));color:#04070d;font-weight:800;font-size:0.92rem;cursor:pointer;">
+          🚀 1. Copy Ticket & Open X DM (@prox_0959)
         </button>
-        <button onclick="submitOrderViaEmail()" style="padding:14px 20px;border-radius:10px;border:1px solid var(--border);background:#1e293b;color:#fff;font-weight:700;font-size:0.9rem;cursor:pointer;">
-          📧 Dispatch via Email (prox0959@gmail.com)
+        <button onclick="submitOrderViaGitHub()" style="flex:1;min-width:220px;padding:14px 18px;border-radius:10px;border:1px solid var(--emerald);background:rgba(52,211,153,0.14);color:var(--emerald);font-weight:800;font-size:0.92rem;cursor:pointer;">
+          ⚡ 2. 1-Click Submit Order via GitHub Ticket
+        </button>
+        <button onclick="submitOrderViaEmail()" style="padding:14px 18px;border-radius:10px;border:1px solid var(--border);background:#1e293b;color:#fff;font-weight:700;font-size:0.9rem;cursor:pointer;">
+          📧 3. Dispatch via Email (prox0959@gmail.com)
         </button>
       </div>
     </div>
@@ -1426,7 +1433,9 @@
       const plan = document.getElementById('chkPlan').value;
       const method = document.getElementById('chkMethod').value;
       const hwid = (document.getElementById('chkHwid').value || 'PENDING_HWID_FROM_APP').trim();
-      return `[PROXSUITE PRO v2.5 ORDER TICKET]\nOrder ID: ${orderRef}\nTier: ${plan}\nMethod: ${method}\nHWID: ${hwid}`;
+      const contactEl = document.getElementById('chkContact');
+      const contact = (contactEl && contactEl.value ? contactEl.value : 'See Sender Profile').trim();
+      return `[PROXSUITE PRO v2.5 ORDER TICKET]\nOrder ID: ${orderRef}\nTier: ${plan}\nMethod: ${method}\nHWID: ${hwid}\nContact: ${contact}`;
     }
 
     function updateOrderPreview() {
@@ -1442,8 +1451,18 @@
       alert('Order Ticket copied to clipboard! Paste (Ctrl+V) it in a DM to @prox_0959 on X for instant activation.');
     }
 
+    function submitOrderViaGitHub() {
+      const plan = document.getElementById('chkPlan').value;
+      const txt = buildOrderPayload();
+      if (navigator.clipboard) navigator.clipboard.writeText(txt);
+      const title = encodeURIComponent(`[ORDER TICKET ${orderRef}] ${plan}`);
+      const body = encodeURIComponent(txt + '\n\n---\n*Submitted via ProxSuite PRO Instant Licensing Portal*');
+      window.open(`https://github.com/prox0959/ProxSuite-PRO/issues/new?title=${title}&body=${body}`, '_blank');
+    }
+
     function submitOrderViaEmail() {
       const txt = buildOrderPayload();
+      if (navigator.clipboard) navigator.clipboard.writeText(txt);
       const subj = encodeURIComponent('ProxSuite PRO License Order - ' + orderRef);
       const body = encodeURIComponent(txt);
       window.location.href = `mailto:prox0959@gmail.com?subject=${subj}&body=${body}`;
