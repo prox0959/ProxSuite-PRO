@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -679,17 +679,17 @@
       <div class="brand">
         <div class="brand-icon">⚡</div>
         <div>PROXSUITE <span style="color:var(--cyan)">PRO</span></div>
-        <span class="brand-badge">v2.5 APEX</span>
+        <span class="brand-badge">v3.0 APEX</span>
       </div>
       <div class="nav-links">
         <a href="#simulator">Live Preview</a>
-        <a href="#engines">25 Engines</a>
+        <a href="#engines">33 Engines</a>
         <a href="#comparison">vs. Antivirus</a>
         <a href="#pricing">Automated Checkout</a>
         <a href="#faq">FAQ</a>
       </div>
       <div class="nav-cta" style="display:flex;gap:10px;align-items:center;">
-        <a href="ProxSuitePRO.exe" download class="btn-nav-dl">⚡ Download .EXE (v2.5)</a>
+        <a href="ProxSuitePRO.exe" download class="btn-nav-dl">⚡ Download .EXE (v3.0)</a>
         <a href="ProxSuitePRO_v2.0_Customer_Release.zip" download class="btn-ghost" style="padding:9px 14px;font-size:0.82rem;border-radius:8px;">📦 .ZIP</a>
       </div>
     </div>
@@ -705,12 +705,12 @@
       <span class="grad-text">Memory Implants in Real Time.</span>
     </h1>
     <p class="hero-p">
-      Standard antivirus software scans static files on disk. <strong>ProxSuite PRO (Apex v2.5 Enterprise)</strong> inspects live process RAM,
+      Standard antivirus software scans static files on disk. <strong>ProxSuite PRO (Apex v3.0 Enterprise)</strong> inspects live process RAM,
       <code>.text</code> Module Stomping, Process Ghosting, <code>ntdll.dll</code> syscalls, LSASS SSP/Snapshot dumps, and kernel ETW-TI streams with Kernel DACL Self-Defense, Hot-Reloadable JSON IOC Rules, and SIEM/Webhook streaming.
     </p>
     <div class="hero-btns">
       <a href="ProxSuitePRO.exe" download class="btn-main">
-        <span>⚡ Direct Download ProxSuitePRO.exe (v2.5 Clean Build)</span>
+        <span>⚡ Direct Download ProxSuitePRO.exe (v3.0 Clean Build)</span>
       </a>
       <a href="ProxSuitePRO_v2.0_Customer_Release.zip" download class="btn-ghost">
         <span>📦 Download Full Release Package (.ZIP)</span>
@@ -753,7 +753,7 @@
       <div class="win-layout">
         <div class="win-sidebar">
           <div class="side-caption">CLICK ENGINE TO PREVIEW TELEMETRY</div>
-          <button class="sim-btn active" onclick="simSelect('ALL', this)">🚀 Full 25-Engine Apex Scan</button>
+          <button class="sim-btn active" onclick="simSelect('ALL', this)">🚀 Full 33-Engine Apex Scan</button>
           <button class="sim-btn" onclick="simSelect('MEM', this)">🥷 22. ModuleStomp, Ghost & LSASS</button>
           <button class="sim-btn" onclick="simSelect('C2', this)">🔩 15. NamedPipe & Dynamic IOCs</button>
           <button class="sim-btn" onclick="simSelect('PERSIST', this)">📡 23. Kernel ETW-TI, WMI & COM</button>
@@ -791,7 +791,7 @@
             </div>
           </div>
           <div class="win-console" id="simConsole">
-            [23:04:12] [✓] Full 25-Engine Apex Scan completed. Kernel DACL Self-Defense ARMED | SIEM EventLog ID 2050 dispatched.
+            [23:04:12] [✓] Full 33-Engine Apex Scan completed. Kernel DACL Self-Defense ARMED | SIEM EventLog ID 2050 dispatched.
           </div>
         </div>
       </div>
@@ -804,7 +804,7 @@
     <p class="sec-sub">Filter by security domain below to explore how ProxSuite PRO inspects every layer of Windows from user-mode RAM down to kernel ETW-TI and LSA SSP packages.</p>
 
     <div class="filter-row">
-      <button class="filter-tab active" onclick="filterEngines('all', this)">All 25 Engines</button>
+      <button class="filter-tab active" onclick="filterEngines('all', this)">All 33 Engines</button>
       <button class="filter-tab" onclick="filterEngines('memory', this)">Memory, Evasion & Kernel (9)</button>
       <button class="filter-tab" onclick="filterEngines('c2', this)">Anti-Stealer & C2 (6)</button>
       <button class="filter-tab" onclick="filterEngines('persist', this)">Persistence & DFIR (5)</button>
@@ -993,14 +993,14 @@
   <section id="comparison" class="container">
     <span class="sec-tag">HEAD-TO-HEAD BENCHMARK</span>
     <h2 class="sec-title">ProxSuite PRO vs. Industry Antivirus & EDR Suites</h2>
-    <p class="sec-sub">See how ProxSuite PRO (Apex v2.5 Enterprise) compares against Windows Defender, Malwarebytes, Bitdefender, Kaspersky, CrowdStrike Falcon, and Sysinternals across 15 critical threat-hunting vectors.</p>
+    <p class="sec-sub">See how ProxSuite PRO (Apex v3.0 Enterprise) compares against Windows Defender, Malwarebytes, Bitdefender, Kaspersky, CrowdStrike Falcon, and Sysinternals across 15 critical threat-hunting vectors.</p>
 
     <div class="comp-wrap">
       <table class="comp-table">
         <thead>
           <tr>
             <th>Forensic Capability / Attack Vector</th>
-            <th style="background:rgba(56,189,248,0.16);color:#fff;border-bottom:2px solid var(--cyan);">⚡ ProxSuite PRO v2.5 (25-in-1)</th>
+            <th style="background:rgba(56,189,248,0.16);color:#fff;border-bottom:2px solid var(--cyan);">⚡ ProxSuite PRO v3.0 (33-in-1)</th>
             <th>🛡️ Windows Defender</th>
             <th>🦠 Malwarebytes Premium</th>
             <th>🔒 Bitdefender / Kaspersky</th>
@@ -1232,7 +1232,7 @@
           <div class="p-price" style="color:#fef08a">$499 <span>/ Full Source (Crypto)</span></div>
           <div class="p-sub">Also selling the complete 3,100+ line C# / Win32 / NT Syscall source code with commercial rebrand rights.</div>
           <ul class="p-features">
-            <li>Full Unobfuscated C# Source Code (All 25 Engines)</li>
+            <li>Full Unobfuscated C# Source Code (All 33 Engines)</li>
             <li>Defender-Clean Dynamic API & Anti-Crack Architecture</li>
             <li>Standalone Offline HWID Keygen & SIEM Modules <em>(3rd-party CGAuth excluded)</em></li>
             <li>Full White-Label / Rebrand Rights & Build Script</li>
@@ -1312,7 +1312,7 @@
     <div class="faq-grid" style="margin-top:36px;">
       <div class="faq-item">
         <div class="faq-q">Does ProxSuite PRO replace my existing antivirus?</div>
-        <div class="faq-a">ProxSuite PRO is a specialized 25-in-1 second-opinion EDR, Live Memory Forensics, and Anti-Stealer Command Center. It is lightweight (~95 KB), verified 100% clean by Windows Defender, and runs alongside Windows Defender or any third-party AV without conflict.</div>
+        <div class="faq-a">ProxSuite PRO is a specialized 33-in-1 second-opinion EDR, Live Memory Forensics, and Anti-Stealer Command Center. It is lightweight (~95 KB), verified 100% clean by Windows Defender, and runs alongside Windows Defender or any third-party AV without conflict.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q">How do Dynamic IOC Rules (prox_rules.json) and SIEM Streaming work?</div>
@@ -1327,7 +1327,7 @@
 
   <footer>
     <div class="container">
-      <p><strong>⚡ ProxSuite PRO (Apex Edition v2.5 - 25-in-1 Enterprise)</strong> • Engineered by Çınar • <strong>Discord: <code>prox0959</code></strong> • <strong>X: <a href="https://x.com/prox_0959" target="_blank" style="color:var(--cyan)">@prox_0959</a></strong></p>
+      <p><strong>⚡ ProxSuite PRO (Apex Edition v3.0 - 33-in-1 Enterprise)</strong> • Engineered by Çınar • <strong>Discord: <code>prox0959</code></strong> • <strong>X: <a href="https://x.com/prox_0959" target="_blank" style="color:var(--cyan)">@prox_0959</a></strong></p>
       <p style="margin-top:8px;color:var(--text-dim);">Protected by AES-256-CBC + HMAC-SHA256 Cryptographic Licensing + 3-Layer Hardware ID Locking + Kernel DACL Self-Defense.</p>
     </div>
   </footer>
@@ -1336,7 +1336,7 @@
     const simData = {
       ALL: {
         crit: 5, high: 1, clean: 214,
-        log: "[23:04:12] [✓] Full 25-Engine Apex Scan completed. Kernel DACL Self-Defense ARMED | SIEM EventLog ID 2050 dispatched.",
+        log: "[23:04:12] [✓] Full 33-Engine Apex Scan completed. Kernel DACL Self-Defense ARMED | SIEM EventLog ID 2050 dispatched.",
         rows: [
           ["Behavioral Correlation", "CRITICAL", "ATTACK CHAIN: COBALT STRIKE", "(3/3 signals matched) Named pipe MSSE-4812 + Unbacked MZ/PE + SeDebugPrivilege ENABLED"],
           ["EvasionHunter [Stomping]", "CRITICAL", "powershell.exe -> amsi.dll", "MODULE STOMPING DETECTED! amsi.dll .text section modified in RAM (14/32 prologue bytes overwritten)"],
@@ -1438,7 +1438,7 @@
       const hwid = (document.getElementById('chkHwid').value || 'PENDING_HWID_FROM_APP').trim();
       const contactEl = document.getElementById('chkContact');
       const contact = (contactEl && contactEl.value ? contactEl.value : 'See Sender Profile').trim();
-      return `[PROXSUITE PRO v2.5 ORDER TICKET]\nOrder ID: ${orderRef}\nTier: ${plan}\nMethod: ${method}\nHWID: ${hwid}\nContact: ${contact}`;
+      return `[PROXSUITE PRO v3.0 ORDER TICKET]\nOrder ID: ${orderRef}\nTier: ${plan}\nMethod: ${method}\nHWID: ${hwid}\nContact: ${contact}`;
     }
 
     function updateOrderPreview() {
