@@ -1,23 +1,46 @@
-# ⚡ ProxSuite PRO (Apex Edition v3.0 Enterprise)
+# ⚡ ProxSuite Community Edition v3.0 [Open Source - MIT]
 
-**33-in-1 Native x64 Windows EDR, Live Memory Forensics, ThreatScore™ Behavior Engine, Auto-Quarantine Vault, Live C2 Threat Intel & SIEM Command Center**
+**35-in-1 Native x64 Windows EDR, Live Memory Forensics, ThreatScore™ Behavior Engine, LOLBAS Hunter, DNS Cache & DGA Sentinel, Auto-Quarantine Vault, Live C2 Threat Intel & SIEM Command Center**
 
-🌐 **Official Interactive Web Portal & Instant Checkout:** **[https://prox0959.github.io/ProxSuite-PRO/](https://prox0959.github.io/ProxSuite-PRO/)**  
-⚡ **Direct Standalone `.EXE` Download (Defender Verified 0/0 Clean):** **[ProxSuitePRO.exe](https://prox0959.github.io/ProxSuite-PRO/ProxSuitePRO.exe)**  
-📦 **Full Release Package (`.ZIP`):** **[ProxSuitePRO_v2.0_Customer_Release.zip](https://prox0959.github.io/ProxSuite-PRO/ProxSuitePRO_v2.0_Customer_Release.zip)**  
-🔑 **Licenses (Crypto Only — USDT / BTC / ETH / SOL / LTC / XMR):** **24h Free Trial ($0)** | **30-Day PRO ($9.99)** | **Permanent v3.x ($24.99)**  
-💎 **Also Selling Full Source Code & White-Label Rights:** **$499.00 (Crypto Only)** — Complete 3,800+ line C# / Win32 / NT Syscall source code for all 33 engines + Standalone Offline AES-256 HWID Keygen + SIEM/Rule modules + full rebrand rights *(Note: 3rd-party CGAuth module is excluded)*  
-💬 **Instant Order & Contact:** **[Order Portal](https://prox0959.github.io/ProxSuite-PRO/#instant-checkout)** | **Discord: `prox0959`** | **X: [@prox_0959](https://x.com/prox_0959)**
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/Platform-Windows%20x64-0078D6.svg)](https://github.com/prox0959/ProxSuite)
+[![Windows Defender](https://img.shields.io/badge/Windows%20Defender-0%2F0%20Clean-success.svg)](https://github.com/prox0959/ProxSuite)
+[![Engines](https://img.shields.io/badge/Forensic%20Engines-35--in--1-8A2BE2.svg)](https://github.com/prox0959/ProxSuite)
+[![GitHub stars](https://img.shields.io/github/stars/prox0959/ProxSuite?style=social)](https://github.com/prox0959/ProxSuite)
 
 ---
 
-## ⚔️ ProxSuite PRO v3.0 vs. Industry Antivirus & EDR Suites
+🌐 **Official Interactive Web Portal:** **[https://prox0959.github.io/ProxSuite-PRO/](https://prox0959.github.io/ProxSuite-PRO/)**  
+⚡ **Direct Standalone `.EXE` Download (Defender Verified 0/0 Clean):** **[ProxSuitePRO.exe](https://prox0959.github.io/ProxSuite-PRO/ProxSuitePRO.exe)**  
+📦 **Full Release Package (`.ZIP`):** **[ProxSuite_v3.0_Community_Release.zip](https://prox0959.github.io/ProxSuite-PRO/ProxSuite_v3.0_Community_Release.zip)**  
+⭐ **GitHub Repository:** **[https://github.com/prox0959/ProxSuite](https://github.com/prox0959/ProxSuite)** (Also available at `ProxSuite-PRO`)  
+💎 **100% Free & Open Source:** Released under the permissive **MIT License**. All 35 enterprise forensic & EDR engines are permanently unlocked with zero paywalls, zero registration, and zero cloud dependencies.
 
-| Forensic Capability / Attack Vector | ⚡ ProxSuite PRO v3.0 (33-in-1) | 🛡️ Windows Defender | 🦠 Malwarebytes Premium | 🔒 Bitdefender / Kaspersky | 🦅 CrowdStrike / SentinelOne | 🧰 Sysinternals Suite |
+---
+
+## 🚀 Key Highlights in v3.0 Community Edition
+
+- **100% Clean Antivirus Footprint:** 0 false-positive ML detections on Microsoft Defender (`MpCmdRun.exe` verified clean).
+- **Engine 34 — LOLBAS & Suspicious CLI Hunter:** WMI-based process command-line auditor for MITRE ATT&CK techniques (`certutil -urlcache`, `powershell -enc`, `mshta`, `rundll32 Squiblydoo`, `bitsadmin`, `wmic`).
+- **Engine 35 — DNS Cache & DGA Sentinel:** Audits active DNS client resolution cache (`ipconfig /displaydns`), computes Shannon entropy on root labels, flags DGA domains (>3.85 entropy, >12 chars), DNS tunneling (>28 char hex/base64 subdomains), and suspicious TLDs (`.top`, `.xyz`, `.onion`, `.click`).
+- **1-Click Executive HTML5 Dashboard:** Generates an executive-ready, interactive dark-mode HTML report with severity cards, MITRE ATT&CK mapping, and instant browser launch.
+- **ThreatScore™ (0–100) Behavioral Engine:** Multi-signal live process scoring combining network sockets, unsigned binaries, Temp/AppData launch paths, Shannon entropy, and suspicious parent chains.
+- **Real-Time Ransomware Guard:** `FileSystemWatcher` sentinel across `Documents`, `Desktop`, and `Downloads` detecting rapid document extension shifts (5+ in 10s) with automated thread suspension via `NtSuspendProcess`.
+- **Live abuse.ch C2 Intelligence Feed:** Streams Feodo Tracker & SSLBL C2 IP blocklists and cross-references active `ESTABLISHED` TCP connections in real time.
+- **XOR Auto-Quarantine Vault:** Moves detected malicious binaries into an isolated, XOR-encrypted vault (`.pqv`/`.pqm`) with 1-click restore.
+- **Dual Visual Theme Engine:** Dark EDR Command Center and Minimal Light mode with encrypted preference persistence.
+
+---
+
+## ⚔️ ProxSuite Community Edition vs. Industry Antivirus & EDR Suites
+
+| Forensic Capability / Attack Vector | ⚡ ProxSuite v3.0 (35-in-1) | 🛡️ Windows Defender | 🦠 Malwarebytes Premium | 🔒 Bitdefender / Kaspersky | 🦅 CrowdStrike / SentinelOne | 🧰 Sysinternals Suite |
 |---|---|---|---|---|---|---|
 | **Unbacked Private RWX Memory & Process Hollowing** | **✓ Live MZ/PE & Shellcode RAM Scanner** | ✗ Bypassed via AMSI/ETW patch | ⚠️ Signature / heuristic only | ⚠️ Misses custom LOLBIN hollowing | ✓ Kernel sensor (Enterprise) | ✗ Manual hex dump required |
 | **Module Stomping (`.text`), Process Ghosting & Herpaderping** | **✓ Disk vs. RAM `.text` Diff & Thread Stack Audit** | ✗ Trusts `MEM_IMAGE` backed modules | ✗ Blind to Module Stomping | ✗ Misses Herpaderped PE headers | ✓ Kernel image telemetry | ✗ None |
 | **NTDLL Syscall Unhooking & SSN Prologue Audit** | **✓ Audits `4C 8B D1 B8` & SSNs live** | ✗ Blind to user-mode NTDLL hooks | ✗ Not inspected | ✗ No user-visible syscall audit | ⚠️ Internal sensor only | ✗ Requires WinDbg |
+| **LOLBAS & Suspicious Command-Line Auditor** | **✓ MITRE ATT&CK CLI parser (certutil/pwsh/mshta)** | ⚠️ Basic ASR rules only | ⚠️ Basic heuristic rules | ⚠️ Partial CLI logging | ✓ EDR telemetry console | ⚠️ Process Explorer inspection |
+| **DNS Cache & DGA / Tunneling Sentinel** | **✓ Shannon Entropy + Subdomain Tunneling Flag** | ✗ No user-visible DNS cache auditor | ✗ Web domain filter only | ✗ Cloud web shield only | ✓ Enterprise DNS telemetry | ✗ No automated DGA score |
 | **ThreatScore™ (0–100) Live Process Behavior & Attack Tree** | **✓ Multi-Signal 0–100 Score + ASCII Parent-Child Tree** | ✗ No user-visible process score | ✗ Binary clean/infected only | ✗ No parent-child attack tree | ✓ Enterprise Falcon console | ⚠️ Raw process tree only |
 | **Live Abuse.ch (Feodo / SSLBL) C2 IP Correlation + VirusTotal** | **✓ Live TCP vs. Botnet Feed + 1-Click VT Lookup** | ✗ No live abuse.ch socket table | ⚠️ Basic web domain blocklist | ✗ Closed cloud lookup only | ✓ Threat Graph (Enterprise) | ⚠️ VT only in Process Explorer |
 | **XOR Auto-Quarantine Vault & Real-Time Ransomware Guard** | **✓ `.pqv` Encrypted Vault + Mass-Rename `NtSuspendProcess`** | ⚠️ Often bypassed by exclusions | ✓ Quarantine + Ransomware module | ✓ Quarantine + Folder shield | ✓ Enterprise containment | ✗ No quarantine or FSW guard |
@@ -28,15 +51,12 @@
 | **LOLBIN RAM Discord / Telegram Webhook C2 Scan** | **✓ Live RAM String IOC Hunter** | ✗ HTTPS traffic looks like normal chat | ✗ Cannot block legitimate Discord API | ✗ Allows outbound HTTPS to Discord | ⚠️ Requires custom YARA rule | ⚠️ Manual Strings search per PID |
 | **Vulnerable Kernel Drivers (BYOVD / LOLDrivers + Event 7045)** | **✓ Built-in LOLDrivers + Kernel Event 7045** | ⚠️ Blocklist often disabled by admin | ✗ Trusts signed WHQL drivers | ✗ Trusts valid digital signatures | ✓ Kernel driver telemetry | ⚠️ Shows drivers without CVE match |
 | **Fileless WMI Subscriptions & HKCU COM Hijacks** | **✓ Authenticode-Filtered Zero-FP Audit** | ⚠️ Misses custom HKCU InprocServer32 | ⚠️ Scans standard Run keys only | ⚠️ Partial startup inspection | ✓ Full persistence telemetry | ⚠️ Dumps 4,000+ noisy legit rows |
-| **Self-Defense (Kernel DACL Anti-Kill + Binary File Lock)** | **✓ Deny Terminate/VM_Write DACL + File Lock** | ⚠️ Bypassed via Exclusion/Tamper scripts | ⚠️ Service can be stopped by Admin | ✓ Kernel self-protection driver | ✓ Enterprise tamper protection | ✗ Easily killed by any malware |
 | **Hot-Reloadable Dynamic IOC Rules & SIEM / Webhook Streaming** | **✓ `prox_rules.json` + CEF/Webhook & EventLog** | ✗ No custom user JSON rules or Webhook | ✗ Closed signatures, no SIEM webhook | ✗ Consumer tier lacks SIEM/Webhook | ✓ Enterprise SOC console | ✗ None |
-| **Real-Time Crypto Clipboard Hijack Shield** | **✓ 600ms BTC/ETH/USDT Vault & Revert** | ✗ Zero clipboard protection | ✗ Zero clipboard protection | ✗ No wallet auto-restore | ✗ Not built for crypto traders | ✗ None |
-| **RAM Footprint & System Performance Impact** | **~215 KB EXE / ~25 MB On-Demand** | ~350 MB RAM (CPU spikes) | ~450 MB RAM + Background Service | ~700 MB RAM + Heavy Filter Drivers | ~300 MB RAM + 24/7 Cloud Upload | ~45 MB (20 separate binaries) |
-| **Licensing Cost & Availability** | **$24.99 One-Time (or 24h Free Preview)** | Included in OS (#1 Bypass Target) | $44.99 - $59.99 / Year | $59.99 - $89.99 / Year | $100+ / Endpoint / Year (Corp Only) | Free (Manual CLI/GUI tools) |
+| **Licensing Cost & Availability** | **100% FREE & OPEN SOURCE (MIT)** | Included in OS | $44.99 - $59.99 / Year | $59.99 - $89.99 / Year | $100+ / Endpoint / Year (Corp Only) | Free (Manual CLI/GUI tools) |
 
 ---
 
-## 🧬 All 33 Built-In Proprietary Engines & Capabilities
+## 🧬 All 35 Built-In Forensic Engines & Modules
 
 | # | Engine Module | Detection / Defense Capability |
 |---|---|---|
@@ -64,7 +84,7 @@
 | **22** | **EvasionHunter (Stomp/Ghost)** | Detects Module Stomping (`.text` byte diff vs. disk), Process Ghosting, Herpaderping & Thread Call-Stack spoofing |
 | **23** | **Kernel ETW-TI & Driver Stream** | Audits `WMI\Autologger` kernel/security ETW sessions against blinding and inspects `Event ID 7045` driver loads |
 | **24** | **LSASS Deep Shield (SSP/Snap)** | Audits `Lsa\Security Packages` for SSP DLL injection (`mimilib`) & hunts `PssCaptureSnapshot` / `dbgcore.dll` dumpers |
-| **25** | **Self-Defense, Rules & SIEM** | Hardens own Kernel DACL (denies `TerminateProcess`/`VM_Write`), locks binary with `FILE_SHARE_READ`, hot-reloads `prox_rules.json` & streams SIEM/Webhook alerts |
+| **25** | **Self-Defense, Rules & SIEM** | Hardens own process security, locks binary with `FILE_SHARE_READ`, hot-reloads `prox_rules.json` & streams SIEM/Webhook alerts |
 | **26** | **VirusTotal Hash Intel** | 1-click SHA-256 lookup via user's free VirusTotal v3 API key or instant browser fallback |
 | **27** | **ThreatScore™ Live Scoring** | Real-time `0–100` behavioral threat scoring across all running processes (network, signature, Temp path, entropy, parent PID) |
 | **28** | **Auto-Quarantine Vault** | Isolates malicious binaries into `%ProgramData%\ProxQuarantine` with XOR encryption (`.pqv`/`.pqm`) & 1-click restore |
@@ -73,4 +93,23 @@
 | **31** | **Scheduled Daily Auto-Scan** | Headless `/autoscan` Windows Task Scheduler integration with automated Executive HTML report & SIEM dispatch |
 | **32** | **Real-Time Ransomware Guard** | `FileSystemWatcher` across `Documents`/`Desktop`/`Downloads` detecting mass extension renames (5+ in 10s) with instant `NtSuspendProcess` freeze |
 | **33** | **Process Attack Tree & Dual Theme** | Automated WMI parent-child ASCII Attack Tree visualization + encrypted Dark / Minimal Light theme switcher |
+| **34** | **LOLBAS Command Hunter** | WMI MITRE ATT&CK command-line auditor flagging LOLBIN abuse (`certutil`, `powershell`, `mshta`, `regsvr32`, `rundll32`, `bitsadmin`, `wmic`) |
+| **35** | **DNS Cache & DGA Sentinel** | Active DNS resolution cache parser computing Shannon entropy to expose DGA domains (>3.85 entropy) and DNS tunneling exfiltration |
 
+---
+
+## 🛠️ Building from Source
+
+ProxSuite is 100% self-contained and compiles with Microsoft's native `.NET Framework 4.8` compiler (`csc.exe`) without needing Visual Studio or external NuGet packages:
+
+```cmd
+C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /target:winexe /platform:x64 /optimize+ /out:ProxSuitePRO.exe /r:System.dll /r:System.Core.dll /r:System.Drawing.dll /r:System.Windows.Forms.dll /r:System.Management.dll /r:System.Web.Extensions.dll /r:System.Net.Http.dll /r:System.ServiceProcess.dll /r:System.Security.dll Security\AntiCrack.cs Security\CGAuthEngine.cs Engines\CoreEngines.cs UI\MainDashboardForm.cs
+```
+
+Or simply run `build.bat`.
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details. Free for personal, commercial, and educational use.
