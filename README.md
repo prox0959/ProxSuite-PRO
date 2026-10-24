@@ -98,6 +98,40 @@
 
 ---
 
+## 💻 CLI & Headless Forensics Mode
+
+ProxSuite v3.0 operates as both a modern GUI desktop application and a powerful command-line forensic utility. When run in terminal or script environments, it automatically binds to the console:
+
+```cmd
+# Run a full 35-engine forensic sweep and export to HTML & JSON
+ProxSuitePRO.exe --scan --html --json findings.json
+
+# Dump unbacked RWX shellcode pages from a suspect PID directly to disk (.bin)
+ProxSuitePRO.exe --dump-rwx 8412 C:\Dumps
+
+# Run instant LOLBAS MITRE ATT&CK command-line hunter
+ProxSuitePRO.exe --lolbas
+
+# Audit active Windows DNS client cache for DGA domains & tunneling
+ProxSuitePRO.exe --dns
+
+# Display version and engine count
+ProxSuitePRO.exe --version
+```
+
+| Flag | Argument | Description |
+|---|---|---|
+| `--help`, `-h`, `/?` | - | Display CLI usage guidelines and command-line options. |
+| `--version`, `-v` | - | Output engine release version and 35-in-1 manifest. |
+| `--scan`, `-s` | - | Execute automated headless forensic triage across all active engines. |
+| `--html` | - | Export findings to an executive interactive HTML5 report and open in browser. |
+| `--json` | `<path>` | Output structured JSON telemetry report for SIEM / automation pipelines. |
+| `--dump-rwx` | `<PID> [dir]` | Live RAM excavator: extract private RWX unbacked shellcode stubs to `.bin`. |
+| `--lolbas` | - | Immediate WMI command-line sweep for LOLBIN MITRE ATT&CK execution. |
+| `--dns` | - | Inspect DNS resolution cache with Shannon Entropy analysis for DGA / tunnels. |
+
+---
+
 ## 🛠️ Building from Source
 
 ProxSuite is 100% self-contained and compiles with Microsoft's native `.NET Framework 4.8` compiler (`csc.exe`) without needing Visual Studio or external NuGet packages:

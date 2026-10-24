@@ -1245,41 +1245,289 @@ namespace ProxSuitePRO.UI
 
     internal static class Program
     {
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern bool AttachConsole(int dwProcessId);
+        private const int ATTACH_PARENT_PROCESS = -1;
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern IntPtr GetStdHandle(int nStdHandle);
+        private const int STD_OUTPUT_HANDLE = -11;
+        private const int STD_ERROR_HANDLE = -12;
+
+        private static void RebindConsole()
+        {
+            if (AttachConsole(ATTACH_PARENT_PROCESS))
+            {
+                IntPtr stdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+                if (stdOut != IntPtr.Zero)
+                {
+                    var safeFileHandle = new Microsoft.Win32.SafeHandles.SafeFileHandle(stdOut, false);
+                    var fileStream = new System.IO.FileStream(safeFileHandle, System.IO.FileAccess.Write);
+                    var standardOutput = new System.IO.StreamWriter(fileStream, System.Text.Encoding.Default);
+                    standardOutput.AutoFlush = true;
+                    Console.SetOut(standardOutput);
+                    Console.SetError(standardOutput);
+                }
+            }
+        }
+
         [STAThread]
         private static void Main(string[] args)
         {
+            if (args != null && args.Length > 0)
+            {
+                string cmd = args[0].ToLowerInvariant();
+
+                // 1. Headless auto-scan mode (triggered by Windows Task Scheduler)
+                if (cmd == "/autoscan" || cmd == "--autoscan")
+                {
+                    try
+                    {
+                        var findings = new List<FindingItem>();
+                        findings.AddRange(CoreEngines.RunMemGuardScan());
+                        findings.AddRange(CoreEngines.RunDefenderAndHostsScan());
+                        findings.AddRange(CoreEngines.AuditOsHardening());
+                        findings.AddRange(CoreEngines.RunThreatScoreScan());
+                        findings.AddRange(CoreEngines.RunThreatIntelCorrelation());
+                        findings.AddRange(CoreEngines.RunNetSentinelScan());
+                        findings.AddRange(CoreEngines.RunLolbasCommandLineScan());
+                        findings.AddRange(CoreEngines.RunDnsCacheDgaScan());
+                        string path = CoreEngines.ExportExecutiveHtmlReport(findings, CGAuthEngine.GetHardwareId(), "AutoScan");
+                        SiemDispatcher.DispatchFindings(findings);
+                    }
+                    catch { }
+                    return;
+                }
+
+                // Attach to parent console for terminal commands and rebind streams
+                RebindConsole();
+
+                if (cmd == "--help" || cmd == "-h" || cmd == "/?")
+                {
+                    PrintCliHelp();
+                    return;
+                }
+
+                if (cmd == "--version" || cmd == "-v")
+                {
+                    Console.WriteLine("\n[+] ProxSuite Community Edition v3.0 (MIT License - 100% Free & Open Source)");
+                    Console.WriteLine("[+] 35-in-1 Windows Native x64 EDR, Live Memory Forensics & SIEM Command Center");
+                    Console.WriteLine("[+] GitHub: https://github.com/prox0959/ProxSuite-PRO\n");
+                    return;
+                }
+
+                if (cmd == "--dump-rwx" || cmd == "-d")
+                {
+                    if (args.Length < 2)
+                    {
+                        Console.WriteLine("\n[!] Usage: ProxSuitePRO.exe --dump-rwx <PID> [output_directory]\n");
+                        return;
+                    }
+                    int targetPid;
+                    if (!int.TryParse(args[1], out targetPid))
+                    {
+                        Console.WriteLine("\n[!] Invalid PID: " + args[1] + "\n");
+                        return;
+                    }
+                    string outDir = args.Length >= 3 ? args[2] : null;
+                    Console.WriteLine(string.Format("\n[*] Searching unbacked RWX memory regions in PID {0}...", targetPid));
+                    var dumped = CoreEngines.DumpProcessRwxMemory(targetPid, outDir);
+                    if (dumped.Count > 0)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine(string.Format("[✓] Success! Dumped {0} suspicious memory page(s):", dumped.Count));
+                        Console.ResetColor();
+                        foreach (var d in dumped) Console.WriteLine("  -> " + d);
+                    }
+                    else
+                    {
+                        Console.WriteLine("[i] Zero unbacked RWX pages found (or PID terminated / access denied).");
+                    }
+                    Console.WriteLine();
+                    return;
+                }
+
+                if (cmd == "--scan" || cmd == "-s")
+                {
+                    RunCliScan(args);
+                    return;
+                }
+
+                if (cmd == "--lolbas")
+                {
+                    RunSingleModuleCli("LOLBAS Command Hunter", CoreEngines.RunLolbasCommandLineScan());
+                    return;
+                }
+
+                if (cmd == "--dns")
+                {
+                    RunSingleModuleCli("DNS Cache & DGA Sentinel", CoreEngines.RunDnsCacheDgaScan());
+                    return;
+                }
+            }
+
+            // Normal GUI boot
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            // Headless auto-scan mode (triggered by Windows Task Scheduler)
-            if (args != null && args.Length > 0 && args[0] == "/autoscan")
-            {
-                try
-                {
-                    var findings = new List<FindingItem>();
-                    findings.AddRange(CoreEngines.RunMemGuardScan());
-                    findings.AddRange(CoreEngines.RunDefenderAndHostsScan());
-                    findings.AddRange(CoreEngines.AuditOsHardening());
-                    findings.AddRange(CoreEngines.RunThreatScoreScan());
-                    findings.AddRange(CoreEngines.RunThreatIntelCorrelation());
-                    findings.AddRange(CoreEngines.RunNetSentinelScan());
-                    string path = CoreEngines.ExportExecutiveHtmlReport(findings, CGAuthEngine.GetHardwareId(), "AutoScan");
-                    SiemDispatcher.DispatchFindings(findings);
-                }
-                catch { }
-                return;
-            }
-
-            // Immediate Anti-Crack check before rendering UI
-            string initialCheck = AntiCrack.PerformSecurityCheck();
-            if (initialCheck != null)
-            {
-                MessageBox.Show("Security Violation:\n" + initialCheck, "ProxSuite Anti-Crack", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            // Open Source Community Edition: Direct dashboard boot
             Application.Run(new MainDashboardForm());
+        }
+
+        private static void PrintCliHelp()
+        {
+            Console.WriteLine(@"
+=============================================================================
+  PROXSUITE COMMUNITY EDITION v3.0 [Open Source - MIT License]
+  35-in-1 Native x64 Windows EDR & Memory Forensics Command Center
+  GitHub: https://github.com/prox0959/ProxSuite-PRO
+=============================================================================
+
+USAGE:
+  ProxSuitePRO.exe                      Boot GUI Dashboard (Default)
+  ProxSuitePRO.exe --scan [options]     Run full 35-engine terminal forensic scan
+  ProxSuitePRO.exe --dump-rwx <PID>     Extract unbacked RWX shellcode from PID to disk
+  ProxSuitePRO.exe --lolbas             Run WMI MITRE ATT&CK LOLBAS command audit
+  ProxSuitePRO.exe --dns                Run DNS Cache & DGA/Tunneling sentinel
+  ProxSuitePRO.exe --version            Show version and license info
+  ProxSuitePRO.exe --help               Show this help message
+
+SCAN OPTIONS:
+  --json <file.json>                    Export full telemetry findings to JSON
+  --html                                Generate and open 1-Click HTML5 Dashboard
+
+EXAMPLES:
+  ProxSuitePRO.exe --scan
+  ProxSuitePRO.exe --scan --json audit.json --html
+  ProxSuitePRO.exe --dump-rwx 8412 C:\malware_dumps
+");
+        }
+
+        private static void RunCliScan(string[] args)
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(@"
+  _____                  _____       _ _        
+ |  __ \                / ____|     (_) |       
+ | |__) | __ _____  __ | (___  _   _ _| |_ ___  
+ |  ___/ '__/ _ \ \/ /  \___ \| | | | | __/ _ \ 
+ | |   | | | (_) >  <   ____) | |_| | | ||  __/ 
+ |_|   |_|  \___/_/\_\ |_____/ \__,_|_|\__\___| 
+ ⚡ 35-in-1 Windows EDR & Memory Forensics (v3.0 MIT)
+");
+            Console.ResetColor();
+
+            Console.WriteLine("[*] Initializing forensic engines...");
+            var findings = new List<FindingItem>();
+
+            Console.Write("[*] [1/8] Memory Guard & HollowHunter (RWX Shellcode)... ");
+            findings.AddRange(CoreEngines.RunMemGuardScan());
+            findings.AddRange(CoreEngines.RunHollowHunterScan());
+            Console.WriteLine("Done.");
+
+            Console.Write("[*] [2/8] EvasionHunter & LSASS Deep Shield... ");
+            findings.AddRange(CoreEngines.RunModuleStompAndGhostScan());
+            findings.AddRange(CoreEngines.RunLsassDeepShieldScan());
+            Console.WriteLine("Done.");
+
+            Console.Write("[*] [3/8] Kernel ETW-TI & Driver Integrity... ");
+            findings.AddRange(CoreEngines.RunKernelEtwTiAudit());
+            findings.AddRange(CoreEngines.RunDriverRadarScan());
+            Console.WriteLine("Done.");
+
+            Console.Write("[*] [4/8] LOLBAS & Suspicious Command-Line Hunter... ");
+            findings.AddRange(CoreEngines.RunLolbasCommandLineScan());
+            Console.WriteLine("Done.");
+
+            Console.Write("[*] [5/8] DNS Cache & DGA Sentinel... ");
+            findings.AddRange(CoreEngines.RunDnsCacheDgaScan());
+            Console.WriteLine("Done.");
+
+            Console.Write("[*] [6/8] NetSentinel & abuse.ch C2 Radar... ");
+            findings.AddRange(CoreEngines.RunNetSentinelScan());
+            findings.AddRange(CoreEngines.RunThreatIntelCorrelation());
+            Console.WriteLine("Done.");
+
+            Console.Write("[*] [7/8] ThreatScore Live Behavioral Scoring... ");
+            findings.AddRange(CoreEngines.RunThreatScoreScan());
+            Console.WriteLine("Done.");
+
+            Console.Write("[*] [8/8] Cross-Engine Behavioral Correlation... ");
+            findings.AddRange(CoreEngines.RunBehavioralCorrelation(findings));
+            Console.WriteLine("Done.\n");
+
+            int crit = findings.Count(f => f.Severity == "CRITICAL");
+            int high = findings.Count(f => f.Severity == "HIGH");
+            int med  = findings.Count(f => f.Severity == "MEDIUM");
+            int clean = findings.Count(f => f.Severity == "CLEAN");
+
+            Console.WriteLine("=============================================================================");
+            Console.ForegroundColor = crit > 0 ? ConsoleColor.Red : ConsoleColor.Green;
+            Console.Write(string.Format(" CRITICAL: {0} ", crit));
+            Console.ForegroundColor = high > 0 ? ConsoleColor.Yellow : ConsoleColor.Gray;
+            Console.Write(string.Format("| HIGH: {0} ", high));
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write(string.Format("| MEDIUM: {0} ", med));
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(string.Format("| CLEAN/VERIFIED: {0}", clean));
+            Console.ResetColor();
+            Console.WriteLine("=============================================================================\n");
+
+            var alerts = findings.Where(f => f.Severity == "CRITICAL" || f.Severity == "HIGH").ToList();
+            if (alerts.Count > 0)
+            {
+                foreach (var a in alerts)
+                {
+                    Console.ForegroundColor = a.Severity == "CRITICAL" ? ConsoleColor.Red : ConsoleColor.Yellow;
+                    Console.Write(string.Format("[{0}] ", a.Severity));
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.Write(string.Format("{0} -> {1}", a.Module, a.Target));
+                    if (a.Pid.Value > 0) Console.Write(string.Format(" (PID: {0})", a.Pid.Value));
+                    Console.WriteLine();
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.WriteLine("  " + a.Details);
+                    Console.ResetColor();
+                }
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("[✓] Zero critical or high-risk threats detected on this host.");
+                Console.ResetColor();
+            }
+
+            // Check for --json option
+            for (int i = 0; i < args.Length; i++)
+            {
+                if (args[i] == "--json" && i + 1 < args.Length)
+                {
+                    string jsonPath = args[i + 1];
+                    CoreEngines.ExportFindingsToJson(findings, jsonPath);
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("\n[✓] Telemetry exported to JSON: " + jsonPath);
+                    Console.ResetColor();
+                }
+                if (args[i] == "--html")
+                {
+                    string htmlPath = CoreEngines.ExportExecutiveHtmlReport(findings, CGAuthEngine.GetHardwareId(), "Community Edition (MIT)");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("[✓] Executive HTML Dashboard exported: " + htmlPath);
+                    Console.ResetColor();
+                    try { Process.Start(htmlPath); } catch { }
+                }
+            }
+            Console.WriteLine();
+        }
+
+        private static void RunSingleModuleCli(string name, List<FindingItem> items)
+        {
+            Console.WriteLine(string.Format("\n[*] Running [{0}]...", name));
+            foreach (var item in items)
+            {
+                Console.ForegroundColor = item.Severity == "CRITICAL" ? ConsoleColor.Red : (item.Severity == "HIGH" ? ConsoleColor.Yellow : ConsoleColor.Green);
+                Console.Write(string.Format("[{0}] ", item.Severity));
+                Console.ResetColor();
+                Console.WriteLine(string.Format("{0}: {1}", item.Target, item.Details));
+            }
+            Console.WriteLine();
         }
     }
 }

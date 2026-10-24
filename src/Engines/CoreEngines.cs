@@ -4146,6 +4146,100 @@ namespace ProxSuitePRO.Engines
             if (string.IsNullOrEmpty(s)) return 0;
             return CalculateShannonEntropy(Encoding.UTF8.GetBytes(s.ToLowerInvariant()));
         }
+
+        // =========================================================================
+        // LIVE PROCESS INJECTED RWX MEMORY DUMPER (CLI / FORENSIC EXCAVATOR)
+        // =========================================================================
+        public static List<string> DumpProcessRwxMemory(int pid, string outputDir = null)
+        {
+            var dumpedFiles = new List<string>();
+            if (string.IsNullOrEmpty(outputDir))
+            {
+                outputDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "dumps");
+            }
+            if (!Directory.Exists(outputDir)) Directory.CreateDirectory(outputDir);
+
+            IntPtr hProc = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, false, pid);
+            if (hProc == IntPtr.Zero) return dumpedFiles;
+
+            const uint PAGE_EXEC_READ = 0x20;
+
+            try
+            {
+                long address = 0;
+                long maxAddress = 0x7FFFFFFEFFFF;
+                MEMORY_BASIC_INFORMATION mbi;
+                uint mbiSize = (uint)Marshal.SizeOf(typeof(MEMORY_BASIC_INFORMATION));
+
+                while (address < maxAddress)
+                {
+                    int ret = VirtualQueryEx(hProc, (IntPtr)address, out mbi, mbiSize);
+                    if (ret == 0) break;
+
+                    if (mbi.State == MEM_COMMIT && mbi.Type == MEM_PRIVATE &&
+                        (mbi.Protect == PAGE_EXECUTE_READWRITE || mbi.Protect == PAGE_EXECUTE_WRITECOPY || mbi.Protect == PAGE_EXEC_READ))
+                    {
+                        int regionSize = (int)Math.Min(mbi.RegionSize.ToInt64(), 32 * 1024 * 1024);
+                        byte[] buffer = new byte[regionSize];
+                        int bytesRead = 0;
+                        if (ReadProcessMemory(hProc, mbi.BaseAddress, buffer, regionSize, out bytesRead) && bytesRead > 0)
+                        {
+                            string fileName = string.Format("dump_pid{0}_0x{1:X}_{2}KB.bin", pid, mbi.BaseAddress.ToInt64(), bytesRead / 1024);
+                            string fullPath = Path.Combine(outputDir, fileName);
+                            byte[] actualData = new byte[bytesRead];
+                            Buffer.BlockCopy(buffer, 0, actualData, 0, bytesRead);
+                            File.WriteAllBytes(fullPath, actualData);
+                            dumpedFiles.Add(fullPath);
+                        }
+                    }
+
+                    long next = mbi.BaseAddress.ToInt64() + mbi.RegionSize.ToInt64();
+                    if (next <= address) break;
+                    address = next;
+                }
+            }
+            finally
+            {
+                CloseHandle(hProc);
+            }
+
+            return dumpedFiles;
+        }
+
+        // =========================================================================
+        // JSON TELEMETRY EXPORTER
+        // =========================================================================
+        public static string ExportFindingsToJson(List<FindingItem> findings, string filePath)
+        {
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            serializer.MaxJsonLength = 50 * 1024 * 1024;
+            var exportObj = new Dictionary<string, object>
+            {
+                { "tool", "ProxSuite Community Edition" },
+                { "version", "3.0.0" },
+                { "license", "MIT License (100% Free & Open Source)" },
+                { "scan_timestamp_utc", DateTime.UtcNow.ToString("o") },
+                { "machine_hwid", ProxSuitePRO.Security.CGAuthEngine.GetHardwareId() },
+                { "total_findings", findings.Count },
+                { "critical_count", findings.Count(f => f.Severity == "CRITICAL") },
+                { "high_count", findings.Count(f => f.Severity == "HIGH") },
+                { "medium_count", findings.Count(f => f.Severity == "MEDIUM") },
+                { "clean_count", findings.Count(f => f.Severity == "CLEAN") },
+                { "findings", findings.Select(f => new Dictionary<string, object>
+                    {
+                        { "module", f.Module },
+                        { "severity", f.Severity },
+                        { "target", f.Target },
+                        { "pid", f.Pid.Value },
+                        { "details", f.Details }
+                    }).ToList()
+                }
+            };
+
+            string json = serializer.Serialize(exportObj);
+            File.WriteAllText(filePath, json, Encoding.UTF8);
+            return filePath;
+        }
     }
 
     // =========================================================================
