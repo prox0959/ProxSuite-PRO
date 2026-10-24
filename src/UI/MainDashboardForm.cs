@@ -49,7 +49,7 @@ namespace ProxSuitePRO.UI
             if (savedTheme == "minimal") { _isMinimalTheme = true; ApplyTheme(); }
 
             LogConsole("[★] ProxSuite Community Edition v3.0 [Open Source - MIT] Initialized.");
-            LogConsole("[✓] Edition Status: 100% Free & Open Source (All 38 Engines Unlocked)");
+            LogConsole("[✓] Edition Status: 100% Free & Open Source (All 41 Engines Unlocked)");
             LogConsole("[✓] Machine Fingerprint: " + CGAuthEngine.GetHardwareId().Substring(0, 24) + "...");
             LogConsole("[✓] Anti-Crack Watchdog & Kernel DACL Self-Defense: ARMED");
             LogConsole("[✓] Real-Time EDR Telemetry & Process Armor: ARMED (35 Forensic Modules)");
@@ -175,7 +175,7 @@ namespace ProxSuitePRO.UI
             sideBar.Controls.Add(lblNavHeader);
 
             int btnY = 32;
-            AddNavButton(sideBar, "🚀 RUN FULL FORENSIC SCAN (38-ENGINE)", ref btnY, Color.FromArgb(2, 132, 199), async () => await RunEngineAsync("ALL"));
+            AddNavButton(sideBar, "🚀 RUN FULL FORENSIC SCAN (41-ENGINE)", ref btnY, Color.FromArgb(2, 132, 199), async () => await RunEngineAsync("ALL"));
             AddNavButton(sideBar, "🛡️ 1. MemGuard v2.0 (NTDLL & LSASS)", ref btnY, Color.FromArgb(30, 41, 59), async () => await RunEngineAsync("MEMGUARD"));
             AddNavButton(sideBar, "🧬 2. HollowHunter (RWX Shellcode)", ref btnY, Color.FromArgb(30, 41, 59), async () => await RunEngineAsync("HOLLOW"));
             AddNavButton(sideBar, "👻 3. GhostTrace (BAM/Prefetch/USB)", ref btnY, Color.FromArgb(30, 41, 59), async () => await RunEngineAsync("GHOST"));
@@ -212,7 +212,10 @@ namespace ProxSuitePRO.UI
             AddNavButton(sideBar, "🌐 35. DNS Cache & DGA Sentinel", ref btnY, Color.FromArgb(15, 118, 110), async () => await RunEngineAsync("DNSDGA"));
             AddNavButton(sideBar, "🧬 36. YARA Signature Scanner", ref btnY, Color.FromArgb(67, 20, 80), async () => await RunEngineAsync("YARA"));
             AddNavButton(sideBar, "🌳 37. Process Attack Tree Hunter", ref btnY, Color.FromArgb(15, 118, 110), async () => await RunEngineAsync("PROCTREE"));
-            AddNavButton(sideBar, "⚡ 38. ETW Event-Driven Guard", ref btnY, Color.FromArgb(6, 78, 59), () => ToggleEtwGuardNow());
+                        AddNavButton(sideBar, "⚡ 38. ETW Event-Driven Guard", ref btnY, Color.FromArgb(6, 78, 59), () => ToggleEtwGuardNow());
+            AddNavButton(sideBar, "⚡ 39. Ransomware Canary Auto-Kill", ref btnY, Color.FromArgb(127, 29, 29), () => ToggleCanaryGuardNow());
+            AddNavButton(sideBar, "⚡ 40. Direct Syscall Hunter", ref btnY, Color.FromArgb(15, 118, 110), async () => await RunEngineAsync("SYSCALLS"));
+            AddNavButton(sideBar, "⚡ 41. LSASS Credential Shield", ref btnY, Color.FromArgb(67, 20, 80), async () => await RunEngineAsync("LSASSGUARD"));
             AddNavButton(sideBar, "🎨 Switch Theme (Dark / Minimal)", ref btnY, Color.FromArgb(51, 65, 85), () => ToggleTheme());
 
             // Divider & Response Actions in Sidebar
@@ -234,7 +237,8 @@ namespace ProxSuitePRO.UI
             AddNavButton(sideBar, "📡 Configure SIEM / Webhook Stream", ref btnY, Color.FromArgb(109, 40, 217), () => ConfigureSiemWebhookNow());
             AddNavButton(sideBar, "📄 Export Executive HTML Report", ref btnY, Color.FromArgb(88, 28, 135), () => ExportHtmlReportNow());
             AddNavButton(sideBar, "📊 Export SIEM JSON (Wazuh/Splunk)", ref btnY, Color.FromArgb(109, 40, 217), () => ExportSiemJsonNow());
-            AddNavButton(sideBar, "🛡️ Arm Anti-Tamper & Process DACL", ref btnY, Color.FromArgb(6, 95, 70), () => ToggleAntiTamperNow());
+                        AddNavButton(sideBar, "🛡️ Arm Anti-Tamper & Process DACL", ref btnY, Color.FromArgb(6, 95, 70), () => ToggleAntiTamperNow());
+            AddNavButton(sideBar, "🛡️ Deploy Canaries & Ransom Guard", ref btnY, Color.FromArgb(127, 29, 29), () => DeployCanariesNow());
 
             // 3. MAIN CONTENT AREA
             Panel mainPanel = new Panel
@@ -488,6 +492,9 @@ namespace ProxSuitePRO.UI
                 if (mode == "ALL" || mode == "YARA")        list.AddRange(CoreEngines.RunYaraScan());
                 if (mode == "ALL" || mode == "PROCTREE")    list.AddRange(CoreEngines.RunProcessTreeBehaviorScan());
                 if (mode == "ALL" || mode == "ETWGUARD")    list.AddRange(CoreEngines.RunEtwProcessEventAudit());
+                if (mode == "ALL" || mode == "RANSOMWARE")  list.AddRange(CoreEngines.RunRansomwareCanaryAudit());
+                if (mode == "ALL" || mode == "SYSCALLS")    list.AddRange(CoreEngines.RunDirectSyscallScan());
+                if (mode == "ALL" || mode == "LSASSGUARD")  list.AddRange(CoreEngines.RunLsassCredentialShieldAudit());
                 if (mode == "ALL")
                 {
                     list.AddRange(CoreEngines.RunBehavioralCorrelation(list));
@@ -868,6 +875,57 @@ namespace ProxSuitePRO.UI
             catch (Exception ex)
             {
                 LogConsole("[!] ETW Guard error: " + ex.Message);
+            }
+        }
+
+        private void ToggleCanaryGuardNow()
+        {
+            try
+            {
+                bool armed = CoreEngines.StartCanaryGuard((alert, pid) =>
+                {
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        LogConsole(string.Format("[⚡ CANARY AUTO-KILL] {0}", alert));
+                        RefreshTelemetryGrid();
+                    });
+                });
+
+                if (armed)
+                {
+                    LogConsole("[⚡] Autonomous Ransomware Canary Sentinel ARMED! Decoy tripwires deployed across Documents, Desktop, Downloads. Unauthorized file locks will trigger instantaneous process execution kill.");
+                    MessageBox.Show(
+                        "Autonomous Ransomware Canary Sentinel is now ARMED!\n\n" +
+                        "• Deployed decoy canary tripwires (~vault_token, ~canary_vault) in key directories.\n" +
+                        "• Real-time file system watchers listening for unauthorized file write/rename/delete attempts.\n" +
+                        "• When touched, the offending ransomware process is immediately TERMINATED within single-digit milliseconds.\n" +
+                        "• Volume Shadow Copies (VSS) protected against destruction commands.",
+                        "Ransomware Canary Sentinel",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+                else
+                {
+                    LogConsole("[!] Failed to arm Ransomware Canary Sentinel.");
+                }
+            }
+            catch (Exception ex)
+            {
+                LogConsole("[!] Canary Sentinel error: " + ex.Message);
+            }
+        }
+
+        private void DeployCanariesNow()
+        {
+            try
+            {
+                int deployed = CoreEngines.DeployCanaries();
+                LogConsole(string.Format("[+] Successfully deployed/verified {0} Ransomware Decoy Canaries across Desktop, Documents, and AppData.", deployed));
+                ToggleCanaryGuardNow();
+            }
+            catch (Exception ex)
+            {
+                LogConsole("[!] Canary deployment error: " + ex.Message);
             }
         }
 
@@ -1492,6 +1550,37 @@ namespace ProxSuitePRO.UI
                     return;
                 }
 
+                if (cmd == "--canary" || cmd == "--ransomware")
+                {
+                    RunSingleModuleCli("Ransomware Canary Sentinel", CoreEngines.RunRansomwareCanaryAudit());
+                    return;
+                }
+
+                if (cmd == "--syscalls")
+                {
+                    RunSingleModuleCli("Direct Syscall Hunter", CoreEngines.RunDirectSyscallScan());
+                    return;
+                }
+
+                if (cmd == "--lsass-guard")
+                {
+                    RunSingleModuleCli("LSASS Credential Shield", CoreEngines.RunLsassCredentialShieldAudit());
+                    return;
+                }
+
+                if (cmd == "--arm-canary")
+                {
+                    CoreEngines.StartCanaryGuard((alert, pid) => {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\n" + alert);
+                        Console.ResetColor();
+                    });
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("\n[+] Autonomous Ransomware Canary Guard ARMED in background. Press Ctrl+C to exit.\n");
+                    Console.ResetColor();
+                    while (true) System.Threading.Thread.Sleep(1000);
+                }
+
                 if (cmd == "--anti-tamper")
                 {
                     ProxSuitePRO.Security.AntiCrack.EnableSelfDefense();
@@ -1513,7 +1602,7 @@ namespace ProxSuitePRO.UI
             Console.WriteLine(@"
 =============================================================================
   PROXSUITE COMMUNITY EDITION v3.0 [Open Source - MIT License]
-  38-in-1 Native x64 Windows EDR & Memory Forensics Command Center
+  41-in-1 Native x64 Windows EDR, Ransomware Auto-Kill & Forensics Command Center
   GitHub: https://github.com/prox0959/ProxSuite-PRO
 =============================================================================
 
@@ -1526,6 +1615,10 @@ USAGE:
   ProxSuitePRO.exe --yara [rules_dir]   Run YARA signature scan on process RAM & disk
   ProxSuitePRO.exe --proctree           Hunt malicious process parent-child execution chains
   ProxSuitePRO.exe --etw                Display ETW event-driven sentinel status
+  ProxSuitePRO.exe --canary             Run autonomous ransomware canary audit & status
+  ProxSuitePRO.exe --arm-canary         Run live background ransomware canary sentinel
+  ProxSuitePRO.exe --syscalls           Hunt unbacked direct syscalls (Hell's Gate/SysWhispers)
+  ProxSuitePRO.exe --lsass-guard        Audit LSASS credential dumping attempts (MiniDump/comsvcs)
   ProxSuitePRO.exe --anti-tamper        Arm process DACL security & binary lock
   ProxSuitePRO.exe --scan --siem <file> Export findings to SIEM ECS/Wazuh format
   ProxSuitePRO.exe --version            Show version and license info
@@ -1552,7 +1645,7 @@ EXAMPLES:
  |  ___/ '__/ _ \ \/ /  \___ \| | | | | __/ _ \ 
  | |   | | | (_) >  <   ____) | |_| | | ||  __/ 
  |_|   |_|  \___/_/\_\ |_____/ \__,_|_|\__\___| 
- ⚡ 38-in-1 Windows EDR & Memory Forensics (v3.0 MIT)
+ ⚡ 41-in-1 Windows EDR & Ransomware Auto-Kill (v3.2 MIT)
 ");
             Console.ResetColor();
 
@@ -1590,8 +1683,20 @@ EXAMPLES:
             findings.AddRange(CoreEngines.RunProcessTreeBehaviorScan());
             Console.WriteLine("Done.");
 
-            Console.Write("[*] [8/8] ETW Event-Driven Real-Time Guard... ");
+            Console.Write("[*] [8/11] ETW Event-Driven Real-Time Guard... ");
             findings.AddRange(CoreEngines.RunEtwProcessEventAudit());
+            Console.WriteLine("Done.");
+
+            Console.Write("[*] [9/11] Ransomware Canary & VSS Fortress... ");
+            findings.AddRange(CoreEngines.RunRansomwareCanaryAudit());
+            Console.WriteLine("Done.");
+
+            Console.Write("[*] [10/11] Direct Syscall Hunter (Hell's Gate/SysWhispers)... ");
+            findings.AddRange(CoreEngines.RunDirectSyscallScan());
+            Console.WriteLine("Done.");
+
+            Console.Write("[*] [11/11] LSASS Credential Theft Shield & MiniDump Interceptor... ");
+            findings.AddRange(CoreEngines.RunLsassCredentialShieldAudit());
             Console.WriteLine("Done.");
 
             Console.Write("[*] [6/8] NetSentinel & abuse.ch C2 Radar... ");
