@@ -5477,7 +5477,7 @@ namespace ProxSuitePRO.Engines
         }
 
         // =========================================================================
-        // MODULE 45 [v3.5]: SCHOOL ENDPOINT IMMUNIZER & USB SPREADER HUNTER
+        // MODULE 45 [v3.5]: HOST ENDPOINT IMMUNIZER & SPREADER HUNTER
         // (Cleans Principal's PC / Teacher PCs / Smart Boards so they stop re-infecting USBs)
         // =========================================================================
         public static List<FindingItem> RunSchoolEndpointDisinfectScan()
@@ -5501,7 +5501,7 @@ namespace ProxSuitePRO.Engines
 
                             var alert = new FindingItem
                             {
-                                Module = "School Endpoint Immunizer",
+                                Module = "Host Endpoint Immunizer",
                                 Severity = "CRITICAL",
                                 Target = string.Format("{0} (PID: {1})", p.ProcessName, p.Id),
                                 Details = string.Format("CRITICAL: Active script host ({0}) suspected of spreading USB shortcut worms terminated!", p.ProcessName),
@@ -5548,7 +5548,7 @@ namespace ProxSuitePRO.Engines
 
                                         var alert = new FindingItem
                                         {
-                                            Module = "School Endpoint Immunizer",
+                                            Module = "Host Endpoint Immunizer",
                                             Severity = "CRITICAL",
                                             Target = string.Format("HKCU\\{0} -> {1}", subKey, valName),
                                             Details = string.Format("CRITICAL: Removed persistent USB worm auto-starter from registry: {0}", val),
@@ -5577,8 +5577,12 @@ namespace ProxSuitePRO.Engines
                         {
                             foreach (string sFile in Directory.GetFiles(sDir, "*.*", SearchOption.TopDirectoryOnly))
                             {
+                                string sNameLower = Path.GetFileName(sFile).ToLowerInvariant();
+                                if (sNameLower.Contains("goodbye") || sNameLower.Contains("zapret") || sNameLower.Contains("discord") || sNameLower.Contains("vpn") || sNameLower.Contains("warp"))
+                                    continue;
+
                                 string sExt = Path.GetExtension(sFile).ToLowerInvariant();
-                                if (sExt == ".vbs" || sExt == ".js" || sExt == ".wsf" || sExt == ".hta" || sExt == ".bat" || sExt == ".cmd" || sExt == ".scr")
+                                if (sExt == ".vbs" || sExt == ".js" || sExt == ".wsf" || sExt == ".hta")
                                 {
                                     try
                                     {
@@ -5586,10 +5590,10 @@ namespace ProxSuitePRO.Engines
                                         spreadersNeutralized++;
                                         var alert = new FindingItem
                                         {
-                                            Module = "School Endpoint Immunizer",
+                                            Module = "Host Endpoint Immunizer",
                                             Severity = "CRITICAL",
                                             Target = string.Format("Startup Folder: {0}", Path.GetFileName(sFile)),
-                                            Details = string.Format("CRITICAL: Destroyed persistent USB worm script in startup folder: {0}", sFile),
+                                            Details = string.Format("CRITICAL: Destroyed persistent script worm in startup folder: {0}", sFile),
                                             Pid = new intPidOrAction(0)
                                         };
                                         results.Add(alert);
@@ -5602,13 +5606,16 @@ namespace ProxSuitePRO.Engines
                                     try
                                     {
                                         string lnkTxt = Encoding.ASCII.GetString(File.ReadAllBytes(sFile)).ToLowerInvariant();
-                                        if (lnkTxt.Contains("wscript") || lnkTxt.Contains("cscript") || lnkTxt.Contains("mshta") || lnkTxt.Contains(".vbs"))
+                                        if (lnkTxt.Contains("goodbye") || lnkTxt.Contains("zapret") || lnkTxt.Contains("discord") || lnkTxt.Contains("warp") || lnkTxt.Contains("steam"))
+                                            continue;
+
+                                        if (lnkTxt.Contains("wscript") || lnkTxt.Contains("cscript") || lnkTxt.Contains("mshta") || (lnkTxt.Contains(".vbs") && !lnkTxt.Contains("goodbye")))
                                         {
                                             File.Delete(sFile);
                                             spreadersNeutralized++;
                                             var alert = new FindingItem
                                             {
-                                                Module = "School Endpoint Immunizer",
+                                                Module = "Host Endpoint Immunizer",
                                                 Severity = "CRITICAL",
                                                 Target = string.Format("Startup LNK: {0}", Path.GetFileName(sFile)),
                                                 Details = string.Format("CRITICAL: Destroyed malicious shortcut spreader in startup folder: {0}", sFile),
@@ -5630,9 +5637,9 @@ namespace ProxSuitePRO.Engines
                 {
                     results.Add(new FindingItem
                     {
-                        Module = "School Endpoint Immunizer",
+                        Module = "Host Endpoint Immunizer",
                         Severity = "CLEAN",
-                        Target = "Host Machine (Principal/Teacher PC & Smart Board)",
+                        Target = "Host System & Removable Drive Subsystem",
                         Details = "CLEAN - Host system is sanitized. Zero USB worm persistence mechanisms or rogue script hosts detected. AutoPlay globally vaccinated.",
                         Pid = new intPidOrAction(0)
                     });
@@ -5642,7 +5649,7 @@ namespace ProxSuitePRO.Engines
             {
                 results.Add(new FindingItem
                 {
-                    Module = "School Endpoint Immunizer",
+                    Module = "Host Endpoint Immunizer",
                     Severity = "CLEAN",
                     Target = "Host Sanitization Core",
                     Details = "Disinfection audit complete: " + ex.Message,

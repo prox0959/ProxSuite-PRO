@@ -219,7 +219,7 @@ namespace ProxSuitePRO.UI
             AddNavButton(sideBar, "⚡ 42. USB Sentinel & Auto-Vaccine", ref btnY, Color.FromArgb(15, 118, 110), async () => await RunEngineAsync("USB"));
             AddNavButton(sideBar, "⚡ 43. LNK Worm & File Unhider", ref btnY, Color.FromArgb(127, 29, 29), async () => await RunEngineAsync("LNKWORM"));
             AddNavButton(sideBar, "⚡ 44. USB Execution Blocker", ref btnY, Color.FromArgb(15, 118, 110), async () => await RunEngineAsync("USBEXEC"));
-            AddNavButton(sideBar, "⚡ 45. School Endpoint Immunizer", ref btnY, Color.FromArgb(6, 78, 59), async () => await RunEngineAsync("SCHOOL"));
+            AddNavButton(sideBar, "⚡ 45. Host Endpoint Immunizer", ref btnY, Color.FromArgb(6, 78, 59), async () => await RunEngineAsync("SCHOOL"));
             AddNavButton(sideBar, "🎨 Switch Theme (Dark / Minimal)", ref btnY, Color.FromArgb(51, 65, 85), () => ToggleTheme());
 
             // Divider & Response Actions in Sidebar
@@ -1074,7 +1074,7 @@ namespace ProxSuitePRO.UI
                 {
                     var result = MessageBox.Show(
                         "Installing ProxSuite EDR to Windows Startup requires Administrator Privileges (UAC).\n\n" +
-                        "This configures automated boot persistence with Highest RunLevel so smart boards and school computers are protected automatically on every startup.\n\n" +
+                        "This configures automated boot persistence with Highest RunLevel so smart boards and endpoint computers are protected automatically on every startup.\n\n" +
                         "Do you want to grant Administrator permissions and proceed?",
                         "Administrator Elevation Required",
                         MessageBoxButtons.YesNo,
@@ -1915,9 +1915,9 @@ private void DisinfectUsbNow()
                 if (cmd == "--school-mode" || cmd == "--disinfect-host")
                 {
                     Console.ForegroundColor = ConsoleColor.Cyan;
-                    Console.WriteLine("\n[*] [SCHOOL DEFENSE SUITE] Sanitizing Host & Disinfecting USB Subsystem...\n");
+                    Console.WriteLine("\n[*] [ENDPOINT DEFENSE SUITE] Sanitizing Host & Disinfecting USB Subsystem...\n");
                     Console.ResetColor();
-                    RunSingleModuleCli("School Endpoint Immunizer", CoreEngines.RunSchoolEndpointDisinfectScan());
+                    RunSingleModuleCli("Host Endpoint Immunizer", CoreEngines.RunSchoolEndpointDisinfectScan());
                     RunSingleModuleCli("USB Execution Blocker", CoreEngines.RunUsbExecutionAudit());
                     RunSingleModuleCli("LNK Worm Disinfector", CoreEngines.DisinfectUsbDrive());
                     return;
@@ -1977,7 +1977,7 @@ USAGE:
   ProxSuitePRO.exe --usb                Audit and immunize connected removable drives
   ProxSuitePRO.exe --disinfect-usb      Purge .LNK shortcut worms & restore all hidden user files
   ProxSuitePRO.exe --usb-block-exec     Block all binary execution directly from USB drives
-  ProxSuitePRO.exe --school-mode        Full school/smartboard immunizer (cleans host + USBs)
+  ProxSuitePRO.exe --school-mode        Full endpoint immunizer (cleans host + USBs)
   ProxSuitePRO.exe --install-startup    Install to Windows Startup with elevated UAC permissions
   ProxSuitePRO.exe --uninstall-startup  Remove ProxSuite from Windows Startup
   ProxSuitePRO.exe --silent             Run headless background protection daemon on boot
@@ -2073,7 +2073,7 @@ EXAMPLES:
             findings.AddRange(CoreEngines.RunUsbExecutionAudit());
             Console.WriteLine("Done.");
 
-            Console.Write("[*] [15/15] School Endpoint & Host Spreader Immunizer... ");
+            Console.Write("[*] [15/15] Host Endpoint & Spreader Immunizer... ");
             findings.AddRange(CoreEngines.RunSchoolEndpointDisinfectScan());
             Console.WriteLine("Done.");
 
