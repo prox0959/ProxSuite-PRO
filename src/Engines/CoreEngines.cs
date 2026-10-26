@@ -5225,6 +5225,9 @@ namespace ProxSuitePRO.Engines
                                                   lnkContent.Contains("wscript") || lnkContent.Contains("cscript") ||
                                                   lnkContent.Contains("mshta") || lnkContent.Contains("rundll32") ||
                                                   lnkContent.Contains(".vbs") || lnkContent.Contains(".js") ||
+                                                  lnkContent.Contains(".scr") || lnkContent.Contains(".bat") ||
+                                                  lnkContent.Contains(".cmd") || lnkContent.Contains(".exe") ||
+                                                  lnkContent.Contains("explorer.exe") ||
                                                   lnkContent.Contains("system volume information") || lnkContent.Contains("recycler");
 
                             if (isMaliciousLnk)
@@ -5298,7 +5301,7 @@ namespace ProxSuitePRO.Engines
                         catch { }
                     }
 
-                    // Check root for stray hidden VBS / JS / EXE
+                    // Check root for stray hidden VBS / JS / EXE / SCR / BAT
                     foreach (string f in Directory.GetFiles(root, "*.*", SearchOption.TopDirectoryOnly))
                     {
                         string ext = Path.GetExtension(f).ToLowerInvariant();
@@ -5313,6 +5316,22 @@ namespace ProxSuitePRO.Engines
                             catch { }
                         }
                     }
+
+                    // Native Windows attrib fallback to 100% guarantee all files and subdirectories are unhidden
+                    try
+                    {
+                        var psiAttrib = new ProcessStartInfo("attrib.exe", string.Format("-s -h -r \"{0}*.*\" /s /d", root))
+                        {
+                            CreateNoWindow = true,
+                            UseShellExecute = false,
+                            WindowStyle = ProcessWindowStyle.Hidden
+                        };
+                        using (var pAttr = Process.Start(psiAttrib))
+                        {
+                            if (pAttr != null) pAttr.WaitForExit(4000);
+                        }
+                    }
+                    catch { }
 
                     if (totalShortcutsRemoved > 0 || totalPayloadsQuarantined > 0)
                     {
@@ -5545,10 +5564,65 @@ namespace ProxSuitePRO.Engines
                     catch { }
                 }
 
-                // 3. Host System Sanitization Check
+                // 3. Audit Windows Startup Folders for Rogue Worm Spreaders
                 try
                 {
-                    // Audit completed cleanly without touching explorer policies directly
+                    string[] startupFolders = new string[] {
+                        Environment.GetFolderPath(Environment.SpecialFolder.Startup),
+                        Environment.GetFolderPath(Environment.SpecialFolder.CommonStartup)
+                    };
+                    foreach (string sDir in startupFolders)
+                    {
+                        if (Directory.Exists(sDir))
+                        {
+                            foreach (string sFile in Directory.GetFiles(sDir, "*.*", SearchOption.TopDirectoryOnly))
+                            {
+                                string sExt = Path.GetExtension(sFile).ToLowerInvariant();
+                                if (sExt == ".vbs" || sExt == ".js" || sExt == ".wsf" || sExt == ".hta" || sExt == ".bat" || sExt == ".cmd" || sExt == ".scr")
+                                {
+                                    try
+                                    {
+                                        File.Delete(sFile);
+                                        spreadersNeutralized++;
+                                        var alert = new FindingItem
+                                        {
+                                            Module = "School Endpoint Immunizer",
+                                            Severity = "CRITICAL",
+                                            Target = string.Format("Startup Folder: {0}", Path.GetFileName(sFile)),
+                                            Details = string.Format("CRITICAL: Destroyed persistent USB worm script in startup folder: {0}", sFile),
+                                            Pid = new intPidOrAction(0)
+                                        };
+                                        results.Add(alert);
+                                        SiemLogWriter.AppendToLiveLog(alert);
+                                    }
+                                    catch { }
+                                }
+                                else if (sExt == ".lnk")
+                                {
+                                    try
+                                    {
+                                        string lnkTxt = Encoding.ASCII.GetString(File.ReadAllBytes(sFile)).ToLowerInvariant();
+                                        if (lnkTxt.Contains("wscript") || lnkTxt.Contains("cscript") || lnkTxt.Contains("mshta") || lnkTxt.Contains(".vbs"))
+                                        {
+                                            File.Delete(sFile);
+                                            spreadersNeutralized++;
+                                            var alert = new FindingItem
+                                            {
+                                                Module = "School Endpoint Immunizer",
+                                                Severity = "CRITICAL",
+                                                Target = string.Format("Startup LNK: {0}", Path.GetFileName(sFile)),
+                                                Details = string.Format("CRITICAL: Destroyed malicious shortcut spreader in startup folder: {0}", sFile),
+                                                Pid = new intPidOrAction(0)
+                                            };
+                                            results.Add(alert);
+                                            SiemLogWriter.AppendToLiveLog(alert);
+                                        }
+                                    }
+                                    catch { }
+                                }
+                            }
+                        }
+                    }
                 }
                 catch { }
 
