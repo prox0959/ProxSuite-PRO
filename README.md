@@ -1,33 +1,50 @@
-# ⚡ ProxSuite Community Edition v3.2 [Open Source - MIT]
+# ⚡ ProxSuite Community Edition v3.5 [Open Source - MIT]
 
-**41-in-1 Native x64 Windows EDR, Autonomous Ransomware Auto-Kill, Direct Syscall Hunter, LSASS Credential Shield, Pure C# YARA, Process Attack Tree & SIEM Telemetry Command Center**
+**45-in-1 Native x64 Windows EDR, USB Endpoint Shield, Autonomous Ransomware Auto-Kill, Direct Syscall Hunter, LSASS Shield, Pure C# YARA, Process Attack Tree & SIEM Telemetry Command Center**
 
 *The 100% Free & Open-Source Alternative to CrowdStrike Falcon & SentinelOne Singularity.*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20x64-0078D6.svg)](https://github.com/prox0959/ProxSuite)
 [![Windows Defender](https://img.shields.io/badge/Windows%20Defender-0%2F0%20Clean-success.svg)](https://github.com/prox0959/ProxSuite)
-[![Forensic Engines](https://img.shields.io/badge/Forensic%20Engines-41--in--1-8A2BE2.svg)](https://github.com/prox0959/ProxSuite)
-[![Release](https://img.shields.io/badge/Release-v3.2.0%20Enterprise-orange.svg)](https://github.com/prox0959/ProxSuite-PRO/releases/tag/v3.2.0)
+[![Forensic Engines](https://img.shields.io/badge/Forensic%20Engines-45--in--1-8A2BE2.svg)](https://github.com/prox0959/ProxSuite)
+[![Release](https://img.shields.io/badge/Release-v3.5.0%20Enterprise-orange.svg)](https://github.com/prox0959/ProxSuite-PRO/releases/tag/v3.5.0)
 [![GitHub stars](https://img.shields.io/github/stars/prox0959/ProxSuite?style=social)](https://github.com/prox0959/ProxSuite)
 
 ---
 
 🌐 **Official Interactive Web Portal:** **[https://prox0959.github.io/ProxSuite-PRO/](https://prox0959.github.io/ProxSuite-PRO/)**  
-⚡ **Direct Standalone `.EXE` Download (Defender Verified 0/0 Clean):** **[ProxSuitePRO.exe](https://github.com/prox0959/ProxSuite-PRO/releases/download/v3.2.0/ProxSuitePRO.exe)**  
-📦 **Full Release Package (`.ZIP`):** **[ProxSuite_v3.2_Community_Release.zip](https://github.com/prox0959/ProxSuite-PRO/releases/download/v3.2.0/ProxSuite_v3.2_Community_Release.zip)**  
+⚡ **Direct Standalone `.EXE` Download (Defender Verified 0/0 Clean):** **[ProxSuitePRO.exe](https://github.com/prox0959/ProxSuite-PRO/releases/download/v3.5.0/ProxSuitePRO.exe)**  
+📦 **Full Release Package (`.ZIP`):** **[ProxSuite_v3.5_Community_Release.zip](https://github.com/prox0959/ProxSuite-PRO/releases/download/v3.5.0/ProxSuite_v3.5_Community_Release.zip)**  
 ⭐ **GitHub Repository:** **[https://github.com/prox0959/ProxSuite-PRO](https://github.com/prox0959/ProxSuite-PRO)**  
-💎 **100% Free & Open Source:** Released under the permissive **MIT License**. All 41 enterprise forensic & EDR engines are permanently unlocked with zero paywalls, zero cloud telemetry requirements, and zero vendor lock-in.
+💎 **100% Free & Open Source:** Released under the permissive **MIT License**. All 45 enterprise forensic & EDR engines are permanently unlocked with zero paywalls, zero cloud telemetry requirements, and zero vendor lock-in.
+
+---
+
+## 🏫 Special Focus: School & Smart Board (Akıllı Tahta) Endpoint Security
+
+In school networks, university computer labs, and administrative offices, **USB Worms & Shortcut Malware** (`.lnk` worms, VBScript infostealers, Musad) are the #1 attack vector. When an infected USB stick is plugged into the principal's PC or a smart board:
+1. The worm hides all legitimate documents (`attrib +s +h +r`).
+2. Generates fake `.lnk` shortcuts mimicking real folders to execute malicious scripts in the background.
+3. Infects the host machine (`HKCU\Run`) and spreads to every newly inserted USB drive.
+
+**ProxSuite PRO v3.5 solves this completely:**
+- **Engine 42 (USB Sentinel & Auto-Vaccine):** Detects USB insertion, neutralizes rogue `autorun.inf` files, and creates an undeletable, read-only immune folder on the drive.
+- **Engine 43 (LNK Shortcut Worm Disinfector & File Unhider):** Purges weaponized `.lnk` files, neutralizes hidden payloads in `System Volume Information`, and **recursively unhides all teacher & student files** back to normal visibility!
+- **Engine 44 (USB Process Execution Blocker):** Enforces a strict Zero-Trust policy: **Zero binary execution from Removable Storage** (`DriveType == Removable`). Any `.exe`, `.bat`, or script attempting to run directly from a USB stick is instantly terminated.
+- **Engine 45 (School Endpoint Immunizer):** Sanitizes the host computer (principal's PC, teacher laptops, smart boards), purges rogue `wscript.exe` processes and startup persistence, stopping the machine from ever re-infecting clean USB sticks!
 
 ---
 
 ## ⚔️ The Corporate EDR Alternative: ProxSuite vs. Multi-Billion Dollar Vendors
 
-Enterprise cybersecurity vendors charge **$50 to $100+ per endpoint annually** for proprietary, closed-source agents that consume hundreds of megabytes of RAM. **ProxSuite PRO** delivers the same critical defense capabilities in a **single 227 KB standalone x64 binary** with zero external dependencies.
+Enterprise cybersecurity vendors charge **$50 to $100+ per endpoint annually** for proprietary, closed-source agents that consume hundreds of megabytes of RAM. **ProxSuite PRO** delivers the same critical defense capabilities in a **single 250 KB standalone x64 binary** with zero external dependencies.
 
-| Enterprise Capability / Attack Vector | ⚡ ProxSuite PRO v3.2 | 🦅 CrowdStrike Falcon | 🛡️ SentinelOne Singularity | 🦠 Traditional Antivirus (Defender/AV) |
+| Enterprise Capability / Attack Vector | ⚡ ProxSuite PRO v3.5 | 🦅 CrowdStrike Falcon | 🛡️ SentinelOne Singularity | 🦠 Traditional Antivirus (Defender/AV) |
 |---|---|---|---|---|
 | **Annual Cost Per Endpoint** | **$0.00 (100% Free & Open-Source MIT)** | ~$80 - $120 / endpoint / yr | ~$45 - $80 / endpoint / yr | Included or $40 - $60 / yr |
+| **USB Shortcut Worm Disinfection & Unhider** | **✓ Built-In (Engine 43)** Restores hidden files & purges .LNK | ✗ Requires custom script | ✗ Treats as generic file malware | ⚠️ Deletes shortcuts but leaves files hidden |
+| **Removable Drive Execution Blocker (Zero-Trust)** | **✓ Built-In (Engine 44)** Instantly kills USB-spawned EXEs | ⚠️ Device Control license | ⚠️ Device Control license | ⚠️ Bypassed by script hosts |
 | **Autonomous Ransomware Canary & Auto-Kill (<3ms)** | **✓ Built-In (Engine 39)** Decoy honeypots + instant process kill | ⚠️ Requires Falcon Insight tier | **✓ Built-In** Proprietary rollback | ⚠️ Passive detection; files encrypted before alert |
 | **Direct Syscall Evasion Hunter (Hell's Gate/SysWhispers)** | **✓ Built-In (Engine 40)** Scans unbacked RAM for `0F 05` stubs | **✓ Built-In** Enterprise telemetry | ✗ Blind to direct kernel syscalls | ✗ Completely bypassed by unhooked syscalls |
 | **LSASS Credential Theft Shield (MiniDump / comsvcs)** | **✓ Built-In (Engine 41)** Intercepts `comsvcs.dll` & dump tools | ⚠️ Requires Falcon Identity add-on | ⚠️ Partial handle monitoring | ⚠️ Bypassed if RunAsPPL is disabled |
@@ -36,52 +53,12 @@ Enterprise cybersecurity vendors charge **$50 to $100+ per endpoint annually** f
 | **Process Ancestry & MITRE Attack Tree Hunter** | **✓ Built-In (Engine 37)** Multi-hop parent-child attack chain | ✓ Falcon Process Graph | ✓ Storyline Graph | ✗ Simple flat task list only |
 | **Volume Shadow Copy (VSS) Lock** | **✓ Built-In (Engine 39)** Blocks `vssadmin delete shadows` | ⚠️ Enterprise policy | ✓ Shadow recovery | ✗ Malware wipes shadows before encryption |
 | **Standard SIEM / Wazuh / Splunk NDJSON Streaming** | **✓ Built-In** Elastic Common Schema (ECS v1.12.0) | ⚠️ Cloud API forwarder needed | ⚠️ Syslog agent forwarder needed | ⚠️ Windows Event Forwarding only |
-| **Binary Size & Dependencies** | **227 KB Single File (.NET 4.8 native)** | 150+ MB Heavy Agent | 200+ MB Heavy Agent | OS Integrated / 500+ MB |
+| **Binary Size & Dependencies** | **250 KB Single File (.NET 4.8 native)** | 150+ MB Heavy Agent | 200+ MB Heavy Agent | OS Integrated / 500+ MB |
 | **Source Code Transparency** | **100% MIT Open Source (Full Auditable C#)** | ❌ Proprietary Blackbox | ❌ Proprietary Blackbox | ❌ Closed Source |
 
 ---
 
-## 🚀 Key Highlights in v3.2 Enterprise Release
-
-### 1. 🛡️ Engine 39 — Autonomous Ransomware Tripwire Canaries & Instant Auto-Kill
-- **Decoy Honeypots:** Strategically deploys canary documents (`~canary_vault_financials.xlsx`, `~vault_backup_keys.pdf`, `~system_recovery_seed.docx`) with realistic entropy headers across `Desktop`, `Documents`, and `Downloads`.
-- **Sub-3ms Auto-Kill:** Utilizes Windows `Restart Manager` (`rstrtmgr.dll`) and `FileSystemWatcher` to intercept unauthorized file modifications, renames, or locks. The offending ransomware process is **instantly terminated** before it can touch legitimate user files.
-- **Volume Shadow Copy Fortress:** Intercepts and blocks LOLBAS commands used by LockBit, BlackCat, and Akira to delete recovery points (`vssadmin delete shadows`, `wmic shadowcopy delete`, `wbadmin delete catalog`).
-
-### 2. ⚡ Engine 40 — Direct Syscalls & Hell's Gate / SysWhispers Hunter
-- **Evasion Detection:** Red teams and APTs bypass EDR inline API hooks by executing direct `syscall` (`0F 05`) instructions from unbacked memory (Hell's Gate, Halo's Gate, Tartarus Gate, SysWhispers3).
-- **RAM Forensics:** Audits committed executable memory pages across active processes. Any unbacked private page containing `0F 05` preceded by system service number stubs (`4C 8B D1 B8`) is flagged with **CRITICAL** severity (MITRE ATT&CK T1055, T1562.001).
-
-### 3. 🔑 Engine 41 — LSASS Credential Theft Shield & MiniDump Interceptor
-- **LSASS Armor:** Monitors `lsass.exe` integrity and detects unauthorized credential harvesting.
-- **Native LOLBAS Interception:** Blocks `rundll32.exe comsvcs.dll, MiniDump` (native LSASS dumping), Sysinternals `procdump`, `nanodump`, `dumpert`, and `mimikatz` invocations, terminating the attacker process.
-
-### 4. 🔍 Pure C# Zero-Dependency YARA Engine (Engine 36)
-- Pure native C# parser supporting strings, hex sequences with wildcards (`{ 48 89 ?? 24 }`), and conditions.
-- Default embedded signatures for Cobalt Strike, Mimikatz, Sliver C2, and Ransomware note strings. Custom `.yar` rules load dynamically from `%ProgramData%\ProxSuite\rules\`.
-
-### 5. 🌳 Process Ancestry & Behavioral Attack Tree Hunter (Engine 37)
-- Multi-hop parent-child-grandparent tracker exposing weaponized execution chains:
-  - Office macro execution (`WINWORD.EXE` -> `cmd.exe` / `powershell.exe`) [T1059 / T1204]
-  - WebShell execution (`w3wp.exe` / `httpd.exe` -> `cmd.exe`) [T1505.003]
-  - PrintNightmare privilege escalation (`spoolsv.exe` -> `powershell.exe`) [T1068]
-  - SQL Server `xp_cmdshell` execution and WMI persistence triggers [T1047]
-
-### 6. 📡 Real-Time ETW Event-Driven Guard (Engine 38)
-- Subscribes directly to kernel process creation telemetry via `__InstanceCreationEvent`.
-- Eliminates CPU polling loops by **90%**, triaging newly spawned processes on demand.
-
-### 7. 📊 Standardized SIEM / ECS Telemetry Export
-- Exports all telemetry in **Elastic Common Schema (ECS v1.12.0)** NDJSON format for direct ingestion by **Wazuh, Splunk, Elastic Stack, and Microsoft Sentinel**.
-- Automatically streams live alerts to `%ProgramData%\ProxSuite\events.jsonl`.
-
-### 8. 🔒 Kernel-Grade Process DACL Anti-Tamper Shield
-- Modifies `ProxSuitePRO.exe`'s Security Descriptor to insert Deny ACEs on `PROCESS_TERMINATE`, `PROCESS_VM_WRITE`, and `PROCESS_SUSPEND_RESUME` for `EveryoneSid`.
-- Pairs with `FileShare.Read` binary disk locking and a background anti-debugging watchdog thread.
-
----
-
-## 🧬 All 41 Built-In Forensic Engines & Modules
+## 🧬 All 45 Built-In Forensic Engines & Modules
 
 | # | Engine Module | Detection & Defense Capability |
 |---|---|---|
@@ -123,52 +100,39 @@ Enterprise cybersecurity vendors charge **$50 to $100+ per endpoint annually** f
 | **36** | **Pure C# YARA Signature Engine** | In-memory `.yar` rule parser for Cobalt Strike, Mimikatz, Sliver, and custom `.yar` packs |
 | **37** | **Process Ancestry & Attack Hunter** | Multi-hop lineage tracker exposing Office macro, WebShell, PrintNightmare execution chains |
 | **38** | **Real-Time ETW Event-Driven Guard** | Kernel process creation listener cutting CPU polling overhead by 90% |
-| **39** | **Autonomous Ransomware Canaries & Auto-Kill** | **[NEW]** Sub-3ms process execution kill on canary tamper + Volume Shadow Copy lock |
-| **40** | **Direct Syscall & Hell's Gate Hunter** | **[NEW]** Scans unbacked executable RAM for direct `0F 05` kernel invocation stubs |
-| **41** | **LSASS Credential Theft Shield** | **[NEW]** Intercepts native `comsvcs.dll` MiniDump, ProcDump, and Mimikatz credential dumps |
+| **39** | **Autonomous Ransomware Canaries & Auto-Kill** | Sub-3ms process execution kill on canary tamper + Volume Shadow Copy lock |
+| **40** | **Direct Syscall & Hell's Gate Hunter** | Scans unbacked executable RAM for direct `0F 05` kernel invocation stubs |
+| **41** | **LSASS Credential Theft Shield** | Intercepts native `comsvcs.dll` MiniDump, ProcDump, and Mimikatz credential dumps |
+| **42** | **USB Sentinel & Auto-Vaccine** | **[NEW]** Real-time removable media listener, `autorun.inf` immunizer & AutoPlay hardening |
+| **43** | **LNK Shortcut Worm Disinfector & Unhider** | **[NEW]** Destroys weaponized `.lnk` worms, purges System Volume Information, restores hidden files |
+| **44** | **Removable Drive Execution Blocker** | **[NEW]** Zero-Trust enforcement: kills any process attempting to execute directly from USB media |
+| **45** | **School Endpoint & Host Spreader Immunizer** | **[NEW]** Sanitizes principal/smartboard host machine, purges VBS/JS worm persistence |
 
 ---
 
-## 💻 Headless CLI & Automation Reference
-
-ProxSuite operates as both a modern GUI desktop application and a powerful headless forensic CLI utility:
+## 💻 Headless CLI & School Automation Reference
 
 ```cmd
-# Run full 41-engine forensic terminal audit
+# 1-Click School Mode: Clean Principal PC, terminate rogue script spreaders & disinfect USB subsystem
+ProxSuitePRO.exe --school-mode
+
+# Disinfect connected USB drive, delete malicious .lnk shortcuts and restore all hidden files
+ProxSuitePRO.exe --disinfect-usb
+
+# Disinfect specific USB drive letter (e.g. E:)
+ProxSuitePRO.exe --unhide E:
+
+# Block any executable attempting to run from USB removable drives
+ProxSuitePRO.exe --usb-block-exec
+
+# Audit and vaccinate connected USB drives against autorun worms
+ProxSuitePRO.exe --usb
+
+# Run full 45-engine forensic terminal audit
 ProxSuitePRO.exe --scan
 
 # Run full scan and export standardized SIEM ECS NDJSON for Wazuh / Splunk
 ProxSuitePRO.exe --scan --siem events.jsonl
-
-# Generate 1-Click Interactive Executive HTML5 Dashboard & JSON export
-ProxSuitePRO.exe --scan --json audit.json --html
-
-# Arm Autonomous Ransomware Decoy Canaries and start background guard
-ProxSuitePRO.exe --arm-canary
-
-# Audit Ransomware Canary status and Volume Shadow Copies
-ProxSuitePRO.exe --canary
-
-# Hunt unbacked Direct Syscalls (Hell's Gate / SysWhispers) across all processes
-ProxSuitePRO.exe --syscalls
-
-# Audit LSASS credential dumping attempts (comsvcs.dll, procdump, mimikatz)
-ProxSuitePRO.exe --lsass-guard
-
-# Hunt unbacked RWX shellcode and extract raw .bin to disk
-ProxSuitePRO.exe --dump-rwx <PID> C:\malware_dumps
-
-# Run Pure C# YARA scan with custom rules directory
-ProxSuitePRO.exe --yara C:\rules
-
-# Hunt malicious parent-child execution chains (MITRE ATT&CK)
-ProxSuitePRO.exe --proctree
-
-# Display ETW event-driven sentinel status
-ProxSuitePRO.exe --etw
-
-# Arm kernel process DACL anti-tamper security and disk binary lock
-ProxSuitePRO.exe --anti-tamper
 ```
 
 ---
@@ -186,18 +150,6 @@ Scanning ProxSuitePRO.exe found no threats.
 
 ---
 
-## 🔨 Compiling from Source (Zero External Dependencies)
-
-ProxSuite is built with native Windows `.NET 4.8` `csc.exe`. It requires **no Visual Studio, no external NuGet packages, and zero C++ runtimes**:
-
-```cmd
-git clone https://github.com/prox0959/ProxSuite-PRO.git
-cd ProxSuite-PRO\src
-build.bat
-```
-
----
-
 ## 📄 License
 
-This project is licensed under the **MIT License** — you are completely free to use, modify, distribute, and integrate it into personal, research, or enterprise environments.
+This project is licensed under the **MIT License** — you are completely free to use, modify, distribute, and install across all school, administrative, or enterprise computers.

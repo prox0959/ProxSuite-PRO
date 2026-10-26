@@ -49,7 +49,7 @@ namespace ProxSuitePRO.UI
             if (savedTheme == "minimal") { _isMinimalTheme = true; ApplyTheme(); }
 
             LogConsole("[★] ProxSuite Community Edition v3.0 [Open Source - MIT] Initialized.");
-            LogConsole("[✓] Edition Status: 100% Free & Open Source (All 41 Engines Unlocked)");
+            LogConsole("[✓] Edition Status: 100% Free & Open Source (All 45 Engines Unlocked)");
             LogConsole("[✓] Machine Fingerprint: " + CGAuthEngine.GetHardwareId().Substring(0, 24) + "...");
             LogConsole("[✓] Anti-Crack Watchdog & Kernel DACL Self-Defense: ARMED");
             LogConsole("[✓] Real-Time EDR Telemetry & Process Armor: ARMED (35 Forensic Modules)");
@@ -175,7 +175,7 @@ namespace ProxSuitePRO.UI
             sideBar.Controls.Add(lblNavHeader);
 
             int btnY = 32;
-            AddNavButton(sideBar, "🚀 RUN FULL FORENSIC SCAN (41-ENGINE)", ref btnY, Color.FromArgb(2, 132, 199), async () => await RunEngineAsync("ALL"));
+            AddNavButton(sideBar, "🚀 RUN FULL FORENSIC SCAN (45-ENGINE)", ref btnY, Color.FromArgb(2, 132, 199), async () => await RunEngineAsync("ALL"));
             AddNavButton(sideBar, "🛡️ 1. MemGuard v2.0 (NTDLL & LSASS)", ref btnY, Color.FromArgb(30, 41, 59), async () => await RunEngineAsync("MEMGUARD"));
             AddNavButton(sideBar, "🧬 2. HollowHunter (RWX Shellcode)", ref btnY, Color.FromArgb(30, 41, 59), async () => await RunEngineAsync("HOLLOW"));
             AddNavButton(sideBar, "👻 3. GhostTrace (BAM/Prefetch/USB)", ref btnY, Color.FromArgb(30, 41, 59), async () => await RunEngineAsync("GHOST"));
@@ -215,7 +215,11 @@ namespace ProxSuitePRO.UI
                         AddNavButton(sideBar, "⚡ 38. ETW Event-Driven Guard", ref btnY, Color.FromArgb(6, 78, 59), () => ToggleEtwGuardNow());
             AddNavButton(sideBar, "⚡ 39. Ransomware Canary Auto-Kill", ref btnY, Color.FromArgb(127, 29, 29), () => ToggleCanaryGuardNow());
             AddNavButton(sideBar, "⚡ 40. Direct Syscall Hunter", ref btnY, Color.FromArgb(15, 118, 110), async () => await RunEngineAsync("SYSCALLS"));
-            AddNavButton(sideBar, "⚡ 41. LSASS Credential Shield", ref btnY, Color.FromArgb(67, 20, 80), async () => await RunEngineAsync("LSASSGUARD"));
+                        AddNavButton(sideBar, "⚡ 41. LSASS Credential Shield", ref btnY, Color.FromArgb(67, 20, 80), async () => await RunEngineAsync("LSASSGUARD"));
+            AddNavButton(sideBar, "⚡ 42. USB Sentinel & Auto-Vaccine", ref btnY, Color.FromArgb(15, 118, 110), async () => await RunEngineAsync("USB"));
+            AddNavButton(sideBar, "⚡ 43. LNK Worm & File Unhider", ref btnY, Color.FromArgb(127, 29, 29), async () => await RunEngineAsync("LNKWORM"));
+            AddNavButton(sideBar, "⚡ 44. USB Execution Blocker", ref btnY, Color.FromArgb(15, 118, 110), async () => await RunEngineAsync("USBEXEC"));
+            AddNavButton(sideBar, "⚡ 45. School Endpoint Immunizer", ref btnY, Color.FromArgb(6, 78, 59), async () => await RunEngineAsync("SCHOOL"));
             AddNavButton(sideBar, "🎨 Switch Theme (Dark / Minimal)", ref btnY, Color.FromArgb(51, 65, 85), () => ToggleTheme());
 
             // Divider & Response Actions in Sidebar
@@ -238,7 +242,8 @@ namespace ProxSuitePRO.UI
             AddNavButton(sideBar, "📄 Export Executive HTML Report", ref btnY, Color.FromArgb(88, 28, 135), () => ExportHtmlReportNow());
             AddNavButton(sideBar, "📊 Export SIEM JSON (Wazuh/Splunk)", ref btnY, Color.FromArgb(109, 40, 217), () => ExportSiemJsonNow());
                         AddNavButton(sideBar, "🛡️ Arm Anti-Tamper & Process DACL", ref btnY, Color.FromArgb(6, 95, 70), () => ToggleAntiTamperNow());
-            AddNavButton(sideBar, "🛡️ Deploy Canaries & Ransom Guard", ref btnY, Color.FromArgb(127, 29, 29), () => DeployCanariesNow());
+                        AddNavButton(sideBar, "🛡️ Deploy Canaries & Ransom Guard", ref btnY, Color.FromArgb(127, 29, 29), () => DeployCanariesNow());
+            AddNavButton(sideBar, "🛡️ 1-Click USB Disinfect & Unhide", ref btnY, Color.FromArgb(127, 29, 29), () => DisinfectUsbNow());
 
             // 3. MAIN CONTENT AREA
             Panel mainPanel = new Panel
@@ -495,6 +500,10 @@ namespace ProxSuitePRO.UI
                 if (mode == "ALL" || mode == "RANSOMWARE")  list.AddRange(CoreEngines.RunRansomwareCanaryAudit());
                 if (mode == "ALL" || mode == "SYSCALLS")    list.AddRange(CoreEngines.RunDirectSyscallScan());
                 if (mode == "ALL" || mode == "LSASSGUARD")  list.AddRange(CoreEngines.RunLsassCredentialShieldAudit());
+                if (mode == "ALL" || mode == "USB")         list.AddRange(CoreEngines.RunUsbSentinelScan());
+                if (mode == "ALL" || mode == "LNKWORM")     list.AddRange(CoreEngines.DisinfectUsbDrive());
+                if (mode == "ALL" || mode == "USBEXEC")     list.AddRange(CoreEngines.RunUsbExecutionAudit());
+                if (mode == "ALL" || mode == "SCHOOL")      list.AddRange(CoreEngines.RunSchoolEndpointDisinfectScan());
                 if (mode == "ALL")
                 {
                     list.AddRange(CoreEngines.RunBehavioralCorrelation(list));
@@ -926,6 +935,45 @@ namespace ProxSuitePRO.UI
             catch (Exception ex)
             {
                 LogConsole("[!] Canary deployment error: " + ex.Message);
+            }
+        }
+
+        private void DisinfectUsbNow()
+        {
+            try
+            {
+                LogConsole("[*] Initiating 1-Click USB Disinfection, LNK Worm Purge & Hidden File Recovery...");
+                var items = CoreEngines.DisinfectUsbDrive();
+                currentFindings.AddRange(items);
+                RefreshTelemetryGrid();
+
+                var alert = items.FirstOrDefault(i => i.Severity == "CRITICAL");
+                if (alert != null)
+                {
+                    LogConsole("[+] " + alert.Details);
+                    MessageBox.Show(
+                        "USB DISINFECTION & RECOVERY COMPLETE!\n\n" +
+                        alert.Details + "\n\n" +
+                        "• All weaponized .lnk shortcut worms have been deleted.\n" +
+                        "• All hidden teacher & student files/folders have been fully restored!\n" +
+                        "• Removable drive is now immunized.",
+                        "USB Sanitization Success",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+                else
+                {
+                    LogConsole("[+] USB Scan Complete: No active LNK shortcut worms detected on connected removable media.");
+                    MessageBox.Show(
+                        "No malicious shortcut worms detected on connected removable drives.\n\nAll user files are intact and visible.",
+                        "USB Scan Clean",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogConsole("[!] USB Disinfection error: " + ex.Message);
             }
         }
 
@@ -1568,6 +1616,36 @@ namespace ProxSuitePRO.UI
                     return;
                 }
 
+                if (cmd == "--usb" || cmd == "--usb-scan")
+                {
+                    RunSingleModuleCli("USB Sentinel & Auto-Vaccine", CoreEngines.RunUsbSentinelScan());
+                    return;
+                }
+
+                if (cmd == "--disinfect-usb" || cmd == "--unhide")
+                {
+                    string drv = args.Length >= 2 ? args[1] : null;
+                    RunSingleModuleCli("LNK Worm Disinfector & File Unhider", CoreEngines.DisinfectUsbDrive(drv));
+                    return;
+                }
+
+                if (cmd == "--usb-block-exec")
+                {
+                    RunSingleModuleCli("USB Execution Blocker", CoreEngines.RunUsbExecutionAudit());
+                    return;
+                }
+
+                if (cmd == "--school-mode" || cmd == "--disinfect-host")
+                {
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine("\n[*] [SCHOOL DEFENSE SUITE] Sanitizing Host & Disinfecting USB Subsystem...\n");
+                    Console.ResetColor();
+                    RunSingleModuleCli("School Endpoint Immunizer", CoreEngines.RunSchoolEndpointDisinfectScan());
+                    RunSingleModuleCli("USB Execution Blocker", CoreEngines.RunUsbExecutionAudit());
+                    RunSingleModuleCli("LNK Worm Disinfector", CoreEngines.DisinfectUsbDrive());
+                    return;
+                }
+
                 if (cmd == "--arm-canary")
                 {
                     CoreEngines.StartCanaryGuard((alert, pid) => {
@@ -1602,7 +1680,7 @@ namespace ProxSuitePRO.UI
             Console.WriteLine(@"
 =============================================================================
   PROXSUITE COMMUNITY EDITION v3.0 [Open Source - MIT License]
-  41-in-1 Native x64 Windows EDR, Ransomware Auto-Kill & Forensics Command Center
+  45-in-1 Native x64 Windows EDR & USB Endpoint Shield, Ransomware Auto-Kill & Forensics Command Center
   GitHub: https://github.com/prox0959/ProxSuite-PRO
 =============================================================================
 
@@ -1619,6 +1697,10 @@ USAGE:
   ProxSuitePRO.exe --arm-canary         Run live background ransomware canary sentinel
   ProxSuitePRO.exe --syscalls           Hunt unbacked direct syscalls (Hell's Gate/SysWhispers)
   ProxSuitePRO.exe --lsass-guard        Audit LSASS credential dumping attempts (MiniDump/comsvcs)
+  ProxSuitePRO.exe --usb                Audit and immunize connected removable drives
+  ProxSuitePRO.exe --disinfect-usb      Purge .LNK shortcut worms & restore all hidden user files
+  ProxSuitePRO.exe --usb-block-exec     Block all binary execution directly from USB drives
+  ProxSuitePRO.exe --school-mode        Full school/smartboard immunizer (cleans host + USBs)
   ProxSuitePRO.exe --anti-tamper        Arm process DACL security & binary lock
   ProxSuitePRO.exe --scan --siem <file> Export findings to SIEM ECS/Wazuh format
   ProxSuitePRO.exe --version            Show version and license info
@@ -1645,7 +1727,7 @@ EXAMPLES:
  |  ___/ '__/ _ \ \/ /  \___ \| | | | | __/ _ \ 
  | |   | | | (_) >  <   ____) | |_| | | ||  __/ 
  |_|   |_|  \___/_/\_\ |_____/ \__,_|_|\__\___| 
- ⚡ 41-in-1 Windows EDR & Ransomware Auto-Kill (v3.2 MIT)
+ ⚡ 45-in-1 Windows EDR & USB Endpoint Shield (v3.5 MIT)
 ");
             Console.ResetColor();
 
@@ -1695,8 +1777,24 @@ EXAMPLES:
             findings.AddRange(CoreEngines.RunDirectSyscallScan());
             Console.WriteLine("Done.");
 
-            Console.Write("[*] [11/11] LSASS Credential Theft Shield & MiniDump Interceptor... ");
+            Console.Write("[*] [11/15] LSASS Credential Theft Shield & MiniDump Interceptor... ");
             findings.AddRange(CoreEngines.RunLsassCredentialShieldAudit());
+            Console.WriteLine("Done.");
+
+            Console.Write("[*] [12/15] USB Sentinel & Removable Storage Immunizer... ");
+            findings.AddRange(CoreEngines.RunUsbSentinelScan());
+            Console.WriteLine("Done.");
+
+            Console.Write("[*] [13/15] LNK Shortcut Worm & Hidden File Unhider... ");
+            findings.AddRange(CoreEngines.DisinfectUsbDrive());
+            Console.WriteLine("Done.");
+
+            Console.Write("[*] [14/15] Removable Drive Execution Blocker (Zero-Trust)... ");
+            findings.AddRange(CoreEngines.RunUsbExecutionAudit());
+            Console.WriteLine("Done.");
+
+            Console.Write("[*] [15/15] School Endpoint & Host Spreader Immunizer... ");
+            findings.AddRange(CoreEngines.RunSchoolEndpointDisinfectScan());
             Console.WriteLine("Done.");
 
             Console.Write("[*] [6/8] NetSentinel & abuse.ch C2 Radar... ");
