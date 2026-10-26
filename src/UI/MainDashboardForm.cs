@@ -70,7 +70,7 @@ namespace ProxSuitePRO.UI
 
         private void InitializeDashboardUI()
         {
-            this.Text = "ProxSuite Community Edition v3.0 [Open Source - MIT] - 35-in-1 Endpoint EDR & Forensics";
+            this.Text = "ProxSuite Community Edition v3.0 [Open Source - MIT] - 45-in-1 Endpoint EDR & USB Shield";
             this.Size = new Size(1280, 820);
             this.MinimumSize = new Size(1100, 720);
             this.StartPosition = FormStartPosition.CenterScreen;
@@ -139,7 +139,7 @@ namespace ProxSuitePRO.UI
 
             lblClipStatus = new Label
             {
-                Text = "🛡️ EDR Armor: ACTIVE (35 Modules)",
+                Text = "🛡️ EDR Armor: ACTIVE (45 Modules)",
                 Font = new Font("Segoe UI", 9f, FontStyle.Bold),
                 ForeColor = Color.FromArgb(74, 222, 128),
                 Location = new Point(855, 22),
@@ -154,7 +154,7 @@ namespace ProxSuitePRO.UI
             topBar.Controls.Add(lblClipStatus);
             RefreshLicenseBanner();
 
-            // 2. LEFT NAVIGATION SIDEBAR (25-IN-1 MODULES)
+            // 2. LEFT NAVIGATION SIDEBAR (45-IN-1 MODULES)
             Panel sideBar = new Panel
             {
                 Dock = DockStyle.Left,
@@ -166,7 +166,7 @@ namespace ProxSuitePRO.UI
 
             Label lblNavHeader = new Label
             {
-                Text = "FORENSIC ENGINES (35-IN-1)",
+                Text = "FORENSIC ENGINES (45-IN-1)",
                 Font = new Font("Segoe UI", 8.5f, FontStyle.Bold),
                 ForeColor = Color.FromArgb(148, 163, 184),
                 Location = new Point(12, 10),
@@ -243,7 +243,9 @@ namespace ProxSuitePRO.UI
             AddNavButton(sideBar, "📊 Export SIEM JSON (Wazuh/Splunk)", ref btnY, Color.FromArgb(109, 40, 217), () => ExportSiemJsonNow());
                         AddNavButton(sideBar, "🛡️ Arm Anti-Tamper & Process DACL", ref btnY, Color.FromArgb(6, 95, 70), () => ToggleAntiTamperNow());
                         AddNavButton(sideBar, "🛡️ Deploy Canaries & Ransom Guard", ref btnY, Color.FromArgb(127, 29, 29), () => DeployCanariesNow());
-            AddNavButton(sideBar, "🛡️ 1-Click USB Disinfect & Unhide", ref btnY, Color.FromArgb(127, 29, 29), () => DisinfectUsbNow());
+                        AddNavButton(sideBar, "🛡️ 1-Click USB Disinfect & Unhide", ref btnY, Color.FromArgb(127, 29, 29), () => DisinfectUsbNow());
+            AddNavButton(sideBar, "⚡ Install to Startup (Auto-Guard)", ref btnY, Color.FromArgb(14, 116, 144), () => InstallToStartupWithElevation());
+            AddNavButton(sideBar, "🛡️ Remove from Windows Startup", ref btnY, Color.FromArgb(51, 65, 85), () => UninstallFromStartupDialog());
 
             // 3. MAIN CONTENT AREA
             Panel mainPanel = new Panel
@@ -938,7 +940,200 @@ namespace ProxSuitePRO.UI
             }
         }
 
-        private void DisinfectUsbNow()
+                public static bool IsRunningAsAdmin()
+        {
+            try
+            {
+                var identity = System.Security.Principal.WindowsIdentity.GetCurrent();
+                var principal = new System.Security.Principal.WindowsPrincipal(identity);
+                return principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator);
+            }
+            catch { return false; }
+        }
+
+        public static bool InstallToStartup(out string statusMessage)
+        {
+            try
+            {
+                if (!MainDashboardForm.IsRunningAsAdmin())
+                {
+                    statusMessage = "Administrator elevation required.";
+                    return false;
+                }
+
+                string currentExe = Application.ExecutablePath;
+                string installDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "ProxSuite");
+                if (!Directory.Exists(installDir)) Directory.CreateDirectory(installDir);
+
+                string targetExe = Path.Combine(installDir, "ProxSuitePRO.exe");
+                try
+                {
+                    if (!string.Equals(currentExe, targetExe, StringComparison.OrdinalIgnoreCase))
+                    {
+                        File.Copy(currentExe, targetExe, true);
+                    }
+                }
+                catch { targetExe = currentExe; }
+
+                // 1. Create elevated Windows Scheduled Task running on logon with Highest Privileges
+                try
+                {
+                    Process p = new Process();
+                    p.StartInfo.FileName = "schtasks.exe";
+                    p.StartInfo.Arguments = string.Format("/create /tn \"ProxSuite_EDR_AutoGuard\" /tr \"\\\"{0}\\\" --silent\" /sc onlogon /rl highest /f", targetExe);
+                    p.StartInfo.UseShellExecute = false;
+                    p.StartInfo.CreateNoWindow = true;
+                    p.Start();
+                    p.WaitForExit(3000);
+                }
+                catch { }
+
+                // 2. Set HKLM Run
+                try
+                {
+                    using (var key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true))
+                    {
+                        if (key != null) key.SetValue("ProxSuite_EDR", "\"" + targetExe + "\" --silent");
+                    }
+                }
+                catch { }
+
+                // 3. Set HKCU Run
+                try
+                {
+                    using (var key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true))
+                    {
+                        if (key != null) key.SetValue("ProxSuite_EDR", "\"" + targetExe + "\" --silent");
+                    }
+                }
+                catch { }
+
+                statusMessage = "Successfully installed ProxSuite PRO 45-in-1 EDR to Windows Startup with Highest Privileges!\n\n" +
+                                "• Target Path: " + targetExe + "\n" +
+                                "• Scheduled Task: ProxSuite_EDR_AutoGuard (Highest RunLevel on logon)\n" +
+                                "• Registry Persistence: HKLM & HKCU Run configured\n" +
+                                "• Protection: Real-time USB Sentinel, Ransomware Canaries, and ETW active on every boot.";
+                return true;
+            }
+            catch (Exception ex)
+            {
+                statusMessage = "Installation error: " + ex.Message;
+                return false;
+            }
+        }
+
+        public static bool UninstallFromStartup(out string statusMessage)
+        {
+            try
+            {
+                try
+                {
+                    Process p = new Process();
+                    p.StartInfo.FileName = "schtasks.exe";
+                    p.StartInfo.Arguments = "/delete /tn \"ProxSuite_EDR_AutoGuard\" /f";
+                    p.StartInfo.UseShellExecute = false;
+                    p.StartInfo.CreateNoWindow = true;
+                    p.Start();
+                    p.WaitForExit(3000);
+                }
+                catch { }
+
+                try
+                {
+                    using (var key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true))
+                    {
+                        if (key != null && key.GetValue("ProxSuite_EDR") != null) key.DeleteValue("ProxSuite_EDR");
+                    }
+                }
+                catch { }
+
+                try
+                {
+                    using (var key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true))
+                    {
+                        if (key != null && key.GetValue("ProxSuite_EDR") != null) key.DeleteValue("ProxSuite_EDR");
+                    }
+                }
+                catch { }
+
+                statusMessage = "ProxSuite PRO startup persistence removed successfully.";
+                return true;
+            }
+            catch (Exception ex)
+            {
+                statusMessage = "Removal error: " + ex.Message;
+                return false;
+            }
+        }
+
+        private void InstallToStartupWithElevation()
+        {
+            try
+            {
+                if (!MainDashboardForm.IsRunningAsAdmin())
+                {
+                    var result = MessageBox.Show(
+                        "Installing ProxSuite EDR to Windows Startup requires Administrator Privileges (UAC).\n\n" +
+                        "This configures automated boot persistence with Highest RunLevel so smart boards and school computers are protected automatically on every startup.\n\n" +
+                        "Do you want to grant Administrator permissions and proceed?",
+                        "Administrator Elevation Required",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        ProcessStartInfo psi = new ProcessStartInfo();
+                        psi.FileName = Application.ExecutablePath;
+                        psi.Arguments = "--install-startup";
+                        psi.Verb = "runas";
+                        psi.UseShellExecute = true;
+                        try
+                        {
+                            Process.Start(psi);
+                            LogConsole("[*] Requested Administrator elevation (UAC prompt launched).");
+                        }
+                        catch (Exception ex)
+                        {
+                            LogConsole("[!] User cancelled or denied elevation: " + ex.Message);
+                        }
+                    }
+                    return;
+                }
+
+                string msg;
+                if (InstallToStartup(out msg))
+                {
+                    LogConsole("[+] " + msg.Replace("\n", " "));
+                    MessageBox.Show(msg, "Startup Installation Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    LogConsole("[!] " + msg);
+                    MessageBox.Show(msg, "Startup Installation Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogConsole("[!] Elevation error: " + ex.Message);
+            }
+        }
+
+        private void UninstallFromStartupDialog()
+        {
+            try
+            {
+                string msg;
+                UninstallFromStartup(out msg);
+                LogConsole("[+] " + msg);
+                MessageBox.Show(msg, "Startup Configuration", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                LogConsole("[!] Uninstall error: " + ex.Message);
+            }
+        }
+
+private void DisinfectUsbNow()
         {
             try
             {
@@ -1525,7 +1720,7 @@ namespace ProxSuitePRO.UI
                 if (cmd == "--version" || cmd == "-v")
                 {
                     Console.WriteLine("\n[+] ProxSuite Community Edition v3.0 (MIT License - 100% Free & Open Source)");
-                    Console.WriteLine("[+] 35-in-1 Windows Native x64 EDR, Live Memory Forensics & SIEM Command Center");
+                    Console.WriteLine("[+] 45-in-1 Windows Native x64 EDR, Live Memory Forensics & SIEM Command Center");
                     Console.WriteLine("[+] GitHub: https://github.com/prox0959/ProxSuite-PRO\n");
                     return;
                 }
@@ -1635,6 +1830,88 @@ namespace ProxSuitePRO.UI
                     return;
                 }
 
+                if (cmd == "--install-startup")
+                {
+                    string status;
+                    if (!MainDashboardForm.IsRunningAsAdmin())
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine("[!] Requesting Administrator privileges (UAC prompt)...");
+                        Console.ResetColor();
+                        try
+                        {
+                            ProcessStartInfo psi = new ProcessStartInfo();
+                            psi.FileName = Application.ExecutablePath;
+                            psi.Arguments = "--install-startup";
+                            psi.Verb = "runas";
+                            psi.UseShellExecute = true;
+                            Process.Start(psi);
+                            return;
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("[!] Elevation denied: " + ex.Message);
+                            return;
+                        }
+                    }
+
+                    if (MainDashboardForm.InstallToStartup(out status))
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("\n[+] SUCCESS: " + status + "\n");
+                        Console.ResetColor();
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\n[!] ERROR: " + status + "\n");
+                        Console.ResetColor();
+                    }
+                    return;
+                }
+
+                if (cmd == "--uninstall-startup")
+                {
+                    string status;
+                    MainDashboardForm.UninstallFromStartup(out status);
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("\n[+] " + status + "\n");
+                    Console.ResetColor();
+                    return;
+                }
+
+                if (cmd == "--silent" || cmd == "--background")
+                {
+                    CoreEngines.StartCanaryGuard((alert, pid) => {
+                        SiemLogWriter.AppendToLiveLog(new FindingItem {
+                            Module = "Ransomware Canary Sentinel",
+                            Severity = "CRITICAL",
+                            Target = "System Storage",
+                            Details = alert,
+                            Pid = new intPidOrAction(pid)
+                        });
+                    });
+
+                    CoreEngines.StartEtwRealtimeGuard((alert, pid) => {
+                        SiemLogWriter.AppendToLiveLog(new FindingItem {
+                            Module = "ETW Event-Driven Guard",
+                            Severity = "CRITICAL",
+                            Target = "Kernel Telemetry",
+                            Details = alert,
+                            Pid = new intPidOrAction(pid)
+                        });
+                    });
+
+                    CoreEngines.RunSchoolEndpointDisinfectScan();
+                    CoreEngines.RunUsbSentinelScan();
+
+                    while (true)
+                    {
+                        System.Threading.Thread.Sleep(5000);
+                        CoreEngines.RunUsbExecutionAudit();
+                    }
+                }
+
                 if (cmd == "--school-mode" || cmd == "--disinfect-host")
                 {
                     Console.ForegroundColor = ConsoleColor.Cyan;
@@ -1686,7 +1963,7 @@ namespace ProxSuitePRO.UI
 
 USAGE:
   ProxSuitePRO.exe                      Boot GUI Dashboard (Default)
-  ProxSuitePRO.exe --scan [options]     Run full 35-engine terminal forensic scan
+  ProxSuitePRO.exe --scan [options]     Run full 45-engine terminal forensic scan
   ProxSuitePRO.exe --dump-rwx <PID>     Extract unbacked RWX shellcode from PID to disk
   ProxSuitePRO.exe --lolbas             Run WMI MITRE ATT&CK LOLBAS command audit
   ProxSuitePRO.exe --dns                Run DNS Cache & DGA/Tunneling sentinel
@@ -1701,6 +1978,9 @@ USAGE:
   ProxSuitePRO.exe --disinfect-usb      Purge .LNK shortcut worms & restore all hidden user files
   ProxSuitePRO.exe --usb-block-exec     Block all binary execution directly from USB drives
   ProxSuitePRO.exe --school-mode        Full school/smartboard immunizer (cleans host + USBs)
+  ProxSuitePRO.exe --install-startup    Install to Windows Startup with elevated UAC permissions
+  ProxSuitePRO.exe --uninstall-startup  Remove ProxSuite from Windows Startup
+  ProxSuitePRO.exe --silent             Run headless background protection daemon on boot
   ProxSuitePRO.exe --anti-tamper        Arm process DACL security & binary lock
   ProxSuitePRO.exe --scan --siem <file> Export findings to SIEM ECS/Wazuh format
   ProxSuitePRO.exe --version            Show version and license info

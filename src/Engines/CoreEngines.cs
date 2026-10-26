@@ -1594,7 +1594,7 @@ namespace ProxSuitePRO.Engines
             sb.AppendLine("h1{color:#38bdf8;margin-top:0;} table{width:100%;border-collapse:collapse;margin-top:15px;}");
             sb.AppendLine("th,td{padding:10px 12px;border-bottom:1px solid #1f2937;text-align:left;font-size:13px;}");
             sb.AppendLine("th{background:#1e293b;color:#94a3b8;} .CRITICAL{color:#f87171;font-weight:bold;} .HIGH{color:#fb923c;font-weight:bold;} .MEDIUM{color:#facc15;} .CLEAN{color:#4ade80;}</style></head><body>");
-            sb.AppendLine("<div class='card'><h1>ProxSuite PRO (25-in-1 Apex v2.5 Enterprise) - Executive Forensics Report</h1>");
+            sb.AppendLine("<div class='card'><h1>ProxSuite PRO (45-in-1 Enterprise EDR & USB Shield) - Executive Forensics Report</h1>");
             sb.AppendLine(string.Format("<p><b>Generated:</b> {0:yyyy-MM-dd HH:mm:ss} | <b>Host:</b> {1} | <b>License Tier:</b> {2} | <b>HWID:</b> {3}...</p></div>",
                 DateTime.Now, Environment.MachineName, licensePlan, hwid.Substring(0, Math.Min(16, hwid.Length))));
             sb.AppendLine("<div class='card'><table><thead><tr><th>Engine Module</th><th>Severity</th><th>Target</th><th>Forensic Telemetry & Details</th></tr></thead><tbody>");
@@ -5172,7 +5172,7 @@ namespace ProxSuitePRO.Engines
 
         // =========================================================================
         // MODULE 43 [v3.5]: LNK SHORTCUT WORM DISINFECTOR & DEEP FILE UNHIDER
-        // (Specifically designed for Schools & Smart Boards / Akilli Tahta)
+        // (Specifically designed for Schools, Smart Boards & Endpoints)
         // =========================================================================
         public static List<FindingItem> DisinfectUsbDrive(string driveLetter = null)
         {
