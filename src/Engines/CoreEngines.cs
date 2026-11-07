@@ -5680,7 +5680,7 @@ namespace ProxSuitePRO.Engines
                 else if (f.Module.Contains("Process Tree")) { tactic = "Execution"; technique = "T1204.002"; }
                 else if (f.Module.Contains("Ransomware") || f.Module.Contains("Canary")) { tactic = "Impact"; technique = "T1486"; }
                 else if (f.Module.Contains("Syscall")) { tactic = "Defense Evasion"; technique = "T1562.001"; }
-                else if (f.Module.Contains("USB") || f.Module.Contains("LNK") || f.Module.Contains("School")) { tactic = "Initial Access"; technique = "T1091"; }
+                else if (f.Module.Contains("USB") || f.Module.Contains("LNK") || f.Module.Contains("Endpoint")) { tactic = "Initial Access"; technique = "T1091"; }
 
                 var ecsObj = new Dictionary<string, object>
                 {

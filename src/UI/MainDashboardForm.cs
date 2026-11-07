@@ -1977,7 +1977,7 @@ USAGE:
   ProxSuitePRO.exe --usb                Audit and immunize connected removable drives
   ProxSuitePRO.exe --disinfect-usb      Purge .LNK shortcut worms & restore all hidden user files
   ProxSuitePRO.exe --usb-block-exec     Block all binary execution directly from USB drives
-  ProxSuitePRO.exe --school-mode        Full endpoint immunizer (cleans host + USBs)
+  ProxSuitePRO.exe --disinfect-host     Full endpoint immunizer (cleans host + USBs)
   ProxSuitePRO.exe --install-startup    Install to Windows Startup with elevated UAC permissions
   ProxSuitePRO.exe --uninstall-startup  Remove ProxSuite from Windows Startup
   ProxSuitePRO.exe --silent             Run headless background protection daemon on boot
